@@ -8,15 +8,7 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children, roleName }: ProtectedRouteProps) => {
-  const { data, status } = useSession();
-
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
-
-  if (status === "authenticated") {
-    return <div>{children}</div>;
-  }
+  const { data } = useSession();
 
   if (data?.user?.role === roleName) {
     return <div>{children}</div>;
