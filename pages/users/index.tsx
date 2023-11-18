@@ -1,5 +1,5 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
-import SideMenu from "@/components/sideMenu";
+import { SideMenu } from "@/components/ui/SideMenu";
 import EditUserDialog from "@/components/users/editUserDialog";
 import { useEffect, useState } from "react";
 
@@ -71,11 +71,11 @@ const Users = () => {
       selectUser
         ? selectUser
         : {
-            id: "",
-            email: "",
-            roleId: "",
-            name: "",
-          }
+          id: "",
+          email: "",
+          roleId: "",
+          name: "",
+        }
     );
     setOpen(true);
   };
@@ -92,7 +92,7 @@ const Users = () => {
 
   return (
     <ProtectedRoute roleName="ADMIN">
-      <main className="flex bg-slate-200 font-medium w-auto">
+      <main className="flex bg-slate-200 font-medium w-full h-screen overflow-hidden">
         <SideMenu />
         <EditUserDialog
           open={open}
@@ -101,43 +101,45 @@ const Users = () => {
           roles={roles}
           selectedUser={selectedUser}
         />
-        <div className="ml-[20.5%]" />
-        <section>
-          <h1>Gestión de Usuarios</h1>
-        </section>
-        <section className="flex flex-col items-center justify-center">
-          <table className="table-auto">
-            <thead>
-              <tr>
-                <th className="px-4 py-2">Identificador</th>
-                <th className="px-4 py-2">Nombre</th>
-                <th className="px-4 py-2">Correo</th>
-                <th className="px-4 py-2">Rol</th>
-                <th className="px-4 py-2">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) => (
-                <tr key={user.id}>
-                  <td className="border px-4 py-2">{user.id}</td>
-                  <td className="border px-4 py-2">{user.name}</td>
-                  <td className="border px-4 py-2">{user.email}</td>
-                  <td className="border px-4 py-2">
-                    {user.roleId == null ? "Sin rol" : getRoleById(user.roleId)}
-                  </td>
-                  <td className="border px-4 py-2">
-                    <button
-                      className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                      onClick={() => handleClickOpen(user.id)}
-                    >
-                      Editar
-                    </button>
-                  </td>
+        {/* <div className="ml-[20.5%]" /> */}
+        <div className="flex flex-col p-6 h-full">
+          <section>
+            <h1>Gestión de Usuarios</h1>
+          </section>
+          <section className="flex flex-col items-center justify-center">
+            <table className="table-auto">
+              <thead>
+                <tr>
+                  <th className="px-4 py-2">Identificador</th>
+                  <th className="px-4 py-2">Nombre</th>
+                  <th className="px-4 py-2">Correo</th>
+                  <th className="px-4 py-2">Rol</th>
+                  <th className="px-4 py-2">Acciones</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </section>
+              </thead>
+              <tbody>
+                {users.map((user) => (
+                  <tr key={user.id}>
+                    <td className="border px-4 py-2">{user.id}</td>
+                    <td className="border px-4 py-2">{user.name}</td>
+                    <td className="border px-4 py-2">{user.email}</td>
+                    <td className="border px-4 py-2">
+                      {user.roleId == null ? "Sin rol" : getRoleById(user.roleId)}
+                    </td>
+                    <td className="border px-4 py-2">
+                      <button
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        onClick={() => handleClickOpen(user.id)}
+                      >
+                        Editar
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </section>
+        </div>
       </main>
     </ProtectedRoute>
   );

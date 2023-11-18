@@ -1,4 +1,4 @@
-import SideMenu from "@/components/sideMenu";
+import { SideMenu } from "@/components/ui/SideMenu";
 import React from "react";
 
 const Inventory = () => {

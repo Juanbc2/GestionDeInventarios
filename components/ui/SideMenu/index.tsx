@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import PrivateComponent from "./PrivateComponent";
+import PrivateComponent from "@/components/PrivateComponent";
+import { NavigationButton } from "@/components/ui/SideMenu/NavigationButton";
 
 const SideMenu = () => {
   const { data, status, update } = useSession();
@@ -20,7 +21,7 @@ const SideMenu = () => {
   }, [data, status]);
 
   return (
-    <aside className="gap-15 px-5 py-2 top-0 bg-neutral-50 flex-col flex h-full w-[330px] fixed">
+    <aside className="gap-16 px-5 py-2 top-0 bg-neutral-50 flex-col flex h-full w-[330px]">
       <section>
         <div className="flex flex-col items-center gap-2 mt-12">
           <img
@@ -32,30 +33,15 @@ const SideMenu = () => {
         </div>
         <br></br>
       </section>
-      <section>
-        <button
-          className="p-2 rounded-sm m-2 border-slate-950 border-2"
-          onClick={() => open("/inventory", "_self")}
-        >
-          Inventarios
-        </button>
-        <button
-          className="p-2 rounded-sm m-2 border-slate-950 border-2"
-          onClick={() => open("/materials", "_self")}
-        >
-          Materiales
-        </button>
+      <section className="flex flex-col items-center gap-2">
+        <NavigationButton text="Inventarios" link="/inventory" />
+        <NavigationButton text="Materiales" link="/materials" />
         <PrivateComponent roleName="ADMIN">
-          <button
-            className="p-2 rounded-sm m-2 border-slate-950 border-2"
-            onClick={() => open("/users", "_self")}
-          >
-            Usuarios
-          </button>
+          <NavigationButton text="Usuarios" link="/users" />
         </PrivateComponent>
       </section>
     </aside>
   );
 };
 
-export default SideMenu;
+export { SideMenu };

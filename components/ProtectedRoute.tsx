@@ -11,7 +11,7 @@ const ProtectedRoute = ({ children, roleName }: ProtectedRouteProps) => {
   const { data } = useSession();
 
   if (data?.user?.role === roleName) {
-    return <div>{children}</div>;
+    return <>{children}</>;
   }
 
   return (
