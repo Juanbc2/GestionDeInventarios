@@ -105,7 +105,7 @@ const Users = () => {
         {/* <div className="ml-[20.5%]" /> */}
         <div className="flex flex-col p-6 h-full">
           <section>
-            <h1>Gestión de Usuarios</h1>
+            <h1>Gestión de Pitos</h1>
           </section>
           <section className="flex flex-col items-center justify-center">
             <table className="table-auto">
