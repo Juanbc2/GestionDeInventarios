@@ -1,6 +1,7 @@
 import { Dialog, DialogContent, DialogTitle } from '@mui/material';
 import React, { Dispatch } from 'react';
 import { DialogButton } from '@/components/ui/DialogButton';
+import { PrimaryButton } from '../ui/PrimaryButton';
 
 interface AddMaterialDialogProps {
     open: boolean;
@@ -10,10 +11,9 @@ interface AddMaterialDialogProps {
 export default function AddMaterialDialog({ open, setOpen }: AddMaterialDialogProps) {
     return (
         <Dialog open={open} onClose={() => setOpen(false)} maxWidth="xl">
-            <DialogTitle>Agregar material</DialogTitle>
-            <DialogContent className='flex flex-col p-3'>
+            <DialogTitle  style={{fontWeight: 400, fontSize: 32}}>Agregar nuevo material a la lista</DialogTitle>
+            <DialogContent className="flex flex-col flex-wrap justify-center">
                 <div className='flex flex-col p-3 gap-4 items-center'>
-                    <span>Agregar nuevo material a la lista de materiales</span>
                     <form className='flex flex-col gap-3'>
                         <label className='flex flex-col gap-1' htmlFor='material-name'>
                             <span>
@@ -35,9 +35,9 @@ export default function AddMaterialDialog({ open, setOpen }: AddMaterialDialogPr
                                 id="name"
                                 className='border border-slate-950 rounded-sm p-1' />
                         </label>
-                        <div className='flex items-center gap-4'>
-                            <DialogButton text='Agregar' onClick={() => {/*TODO*/ }} />
-                            <DialogButton text='Cerrar' onClick={() => setOpen(false)} type='button' />
+                        <div className="flex items-center gap-20">
+                            <PrimaryButton text='Agregar' onClick={() => {/*TODO*/ }} />
+                            <PrimaryButton text='Cerrar' onClick={() => setOpen(false)}/>
                         </div>
                     </form>
                 </div>

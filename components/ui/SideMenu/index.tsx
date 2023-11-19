@@ -21,7 +21,7 @@ const SideMenu = () => {
   }, [data, status]);
 
   return (
-    <aside className="gap-16 px-5 py-2 top-0 bg-neutral-50 flex-col flex h-full w-[330px]">
+    <aside className="gap-16 px-5 py-2 top-0 bg-[#f2f2f2] flex-col flex h-full w-[330px]">
       <section>
         <div className="flex flex-col items-center gap-2 mt-12">
           <img
