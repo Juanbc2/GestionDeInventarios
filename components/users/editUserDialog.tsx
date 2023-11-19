@@ -4,6 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import { useEffect } from "react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
+import { DialogButton } from "@/components/ui/DialogButton";
 
 interface HireDialogProps {
   open: boolean;
@@ -130,18 +131,8 @@ function EditUserDialog(props: HireDialogProps) {
         </div>
 
         <div>
-          <button
-            className="m-5 py-2 px-5 rounded-lg text-slate-50 bg-cyan-700 hover:bg-cyan-800 font-bold text-lg glow-on-hover"
-            onClick={updateUser}
-          >
-            Actualizar
-          </button>
-          <button
-            className="m-5 py-2 px-5 rounded-lg text-slate-50 bg-cyan-700 hover:bg-cyan-800 font-bold text-lg"
-            onClick={handleClose}
-          >
-            Cerrar
-          </button>
+          <DialogButton text="Actualizar" onClick={updateUser} />
+          <DialogButton text="Cerrar" onClick={handleClose} />
         </div>
       </DialogContent>
     </Dialog>
