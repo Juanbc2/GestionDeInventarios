@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
 import { DialogButton } from "@/components/ui/DialogButton";
-import { PrimaryButton } from "../ui/PrimaryButton";
 
 interface HireDialogProps {
   open: boolean;
@@ -82,10 +81,13 @@ function EditUserDialog(props: HireDialogProps) {
 
   return (
     <Dialog onClose={handleClose} open={open} maxWidth="xl">
-      <DialogTitle className="flex justify-center" style={{fontWeight: 400, fontSize: 32}}>
+      <DialogTitle className="flex flex-wrap justify-center font-bold text-2xl">
         Edición de usuario
       </DialogTitle>
       <DialogContent className="flex flex-col flex-wrap justify-center">
+        <div>
+          <h1>Usuarios</h1>
+        </div>
         <div>
           <table className="table-auto">
             <thead>
@@ -99,8 +101,8 @@ function EditUserDialog(props: HireDialogProps) {
             <tbody>
               <tr>
                 <td className="border px-4 py-2">{form.values.id}</td>
-                <td className="border px-4 py-2 ">
-                  <input className="py-2 px-4 rounded hover:bg-[#f2f2f2]"
+                <td className="border px-4 py-2">
+                  <input
                     type="text"
                     value={form.values.name}
                     onChange={(e) =>
@@ -110,7 +112,7 @@ function EditUserDialog(props: HireDialogProps) {
                 </td>
                 <td className="border px-4 py-2">{form.values.email}</td>
                 <td className="border px-4 py-2">
-                  <select className="py-2 px-4 rounded hover:bg-[#f2f2f2]"
+                  <select
                     onChange={(e) =>
                       form.setFieldValue("roleId", e.target.value)
                     }
@@ -127,12 +129,11 @@ function EditUserDialog(props: HireDialogProps) {
             </tbody>
           </table>
         </div>
-        <br/>              
-        <div className="flex justify-center items-center gap-20">
-          <PrimaryButton text="Actualizar" onClick={updateUser} />
-          <PrimaryButton text="Cerrar" onClick={handleClose} />
-        </div>
 
+        <div>
+          <DialogButton text="Actualizar" onClick={updateUser} />
+          <DialogButton text="Cerrar" onClick={handleClose} />
+        </div>
       </DialogContent>
     </Dialog>
   );

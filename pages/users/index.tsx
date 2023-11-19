@@ -72,16 +72,16 @@ const Users = () => {
       selectUser
         ? selectUser
         : {
-          id: "",
-          email: "",
-          roleId: "",
-          name: "",
-        }
+            id: "",
+            email: "",
+            roleId: "",
+            name: "",
+          }
     );
     setOpen(true);
   };
 
-  const handleClose = (value: string) => {
+  const handleClose = () => {
     getUsers();
     setOpen(false);
   };
@@ -93,7 +93,7 @@ const Users = () => {
 
   return (
     <ProtectedRoute roleName="ADMIN">
-      <main className="flex font-medium w-screen h-screen overflow-hidden">
+      <main className="flex bg-slate-200 font-medium w-full h-screen overflow-hidden">
         <SideMenu />
         <EditUserDialog
           open={open}
@@ -102,31 +102,39 @@ const Users = () => {
           roles={roles}
           selectedUser={selectedUser}
         />
-        <div className="flex flex-col py-12 gap-[104px] mx-28 w-full">
-          <h1 className="flex justify-center h-32" style={{fontWeight: 400, fontSize: 48}}>Gestión de Usuarios</h1>
-          <section className="flex flex-col w-full border-2">
+        {/* <div className="ml-[20.5%]" /> */}
+        <div className="flex flex-col p-6 h-full">
+          <section>
+            <h1>Gestión de Pitos</h1>
+          </section>
+          <section className="flex flex-col items-center justify-center">
             <table className="table-auto">
-              <thead className="bg-[#2D8F1D]">
+              <thead>
                 <tr>
-                  <td className="px-4 py-2">Identificador</td>
-                  <td className="px-4 py-2">Nombre</td>
-                  <td className="px-4 py-2">Correo</td>
-                  <td className="px-4 py-2">Rol</td>
+                  <th className="px-4 py-2">Identificador</th>
+                  <th className="px-4 py-2">Nombre</th>
+                  <th className="px-4 py-2">Correo</th>
+                  <th className="px-4 py-2">Rol</th>
                   <th className="px-4 py-2">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user, index) => (
-                  <tr key={user.id} style={{ backgroundColor: index % 2 !== 0 ? '#f2f2f2' : 'transparent' }}>
+                {users.map((user) => (
+                  <tr key={user.id}>
                     <td className="border px-4 py-2">{user.id}</td>
                     <td className="border px-4 py-2">{user.name}</td>
                     <td className="border px-4 py-2">{user.email}</td>
                     <td className="border px-4 py-2">
-                      {user.roleId == null ? "Sin rol" : getRoleById(user.roleId)}
+                      {user.roleId == null
+                        ? "Sin rol"
+                        : getRoleById(user.roleId)}
                     </td>
-                    <th className="border px-4 py-2">
-                      <PrimaryButton text="Editar" onClick={() => handleClickOpen(user.id)} />
-                    </th>
+                    <td className="border px-4 py-2">
+                      <PrimaryButton
+                        text="Editar"
+                        onClick={() => handleClickOpen(user.id)}
+                      />
+                    </td>
                   </tr>
                 ))}
               </tbody>

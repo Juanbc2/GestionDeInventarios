@@ -5,7 +5,3 @@
 h1{
     @apply text-3xl font-semibold;
 }
-
-.debug{
-    @apply border-2 border-red-500;
-}

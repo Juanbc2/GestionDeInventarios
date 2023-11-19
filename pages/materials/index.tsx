@@ -5,7 +5,6 @@ import { SideMenu } from "@/components/ui/SideMenu";
 import { notify } from "@/utils/toast";
 import React, { useState, useEffect } from "react";
 
-
 const Materials = () => {
   const [materials, setMaterials] = useState([
     {
@@ -43,7 +42,7 @@ const Materials = () => {
   };
 
   return (
-    <main className="flex flex-row  font-medium w-auto h-screen">
+    <main className="flex flex-row bg-slate-200 font-medium w-auto h-screen">
       <SideMenu />
       <AddMaterialDialog open={open} selectedValue={""} onClose={handleClose} />
       <div className="flex flex-col py-12 gap-12 mx-28 w-full">
