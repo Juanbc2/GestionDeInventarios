@@ -10,10 +10,10 @@ const NavigationButton = ({ text, link }: NavigationButtonProps) => {
     const router = useRouter();
 
     return (
-        <button className={`w-[230px] border-2  rounded-sm text-left
+        <button className={`w-[230px] border-2 rounded-lg text-left
         ${router.asPath === link
-                ? 'border-blue-700 hover:text-blue-600'
-                : 'border-slate-950 hover:text-blue-600 hover:border-blue-500'
+                ? 'border-[#2D8F1D] hover:text-[#2D8F1D]'
+                : 'border-slate-950 hover:text-[#2D8F1D] hover:border-[#2D8F1D]'
             }`}>
             <Link
                 aria-haspopup='false'

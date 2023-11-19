@@ -93,7 +93,7 @@ const Users = () => {
 
   return (
     <ProtectedRoute roleName="ADMIN">
-      <main className="flex bg-slate-200 font-medium w-full h-screen overflow-hidden">
+      <main className="flex font-medium w-screen h-screen overflow-hidden">
         <SideMenu />
         <EditUserDialog
           open={open}
@@ -102,34 +102,31 @@ const Users = () => {
           roles={roles}
           selectedUser={selectedUser}
         />
-        {/* <div className="ml-[20.5%]" /> */}
-        <div className="flex flex-col p-6 h-full">
-          <section>
-            <h1>Gestión de Usuarios</h1>
-          </section>
-          <section className="flex flex-col items-center justify-center">
+        <div className="flex flex-col py-12 gap-[104px] mx-28 w-full">
+          <h1 className="flex justify-center h-32" style={{fontWeight: 400, fontSize: 48}}>Gestión de Usuarios</h1>
+          <section className="flex flex-col w-full border-2">
             <table className="table-auto">
-              <thead>
+              <thead className="bg-[#2D8F1D]">
                 <tr>
-                  <th className="px-4 py-2">Identificador</th>
-                  <th className="px-4 py-2">Nombre</th>
-                  <th className="px-4 py-2">Correo</th>
-                  <th className="px-4 py-2">Rol</th>
+                  <td className="px-4 py-2">Identificador</td>
+                  <td className="px-4 py-2">Nombre</td>
+                  <td className="px-4 py-2">Correo</td>
+                  <td className="px-4 py-2">Rol</td>
                   <th className="px-4 py-2">Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                {users.map((user) => (
-                  <tr key={user.id}>
+                {users.map((user, index) => (
+                  <tr key={user.id} style={{ backgroundColor: index % 2 !== 0 ? '#f2f2f2' : 'transparent' }}>
                     <td className="border px-4 py-2">{user.id}</td>
                     <td className="border px-4 py-2">{user.name}</td>
                     <td className="border px-4 py-2">{user.email}</td>
                     <td className="border px-4 py-2">
                       {user.roleId == null ? "Sin rol" : getRoleById(user.roleId)}
                     </td>
-                    <td className="border px-4 py-2">
+                    <th className="border px-4 py-2">
                       <PrimaryButton text="Editar" onClick={() => handleClickOpen(user.id)} />
-                    </td>
+                    </th>
                   </tr>
                 ))}
               </tbody>
