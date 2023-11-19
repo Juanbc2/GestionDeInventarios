@@ -1,3 +1,4 @@
+import { CircularProgress } from "@mui/material";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
@@ -9,7 +10,16 @@ const PrivateRoute = ({ children }: PrivateRouteProps) => {
   const { status } = useSession();
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <main className="h-screen w-full flex items-center justify-center">
+        <section className="flex flex-col items-center justify-center gap-40">
+          <h1 style={{ fontWeight: 400, fontSize: 48, color: "#2D8F1D" }}>
+            <CircularProgress size={60} thickness={4} color="success" />{" "}
+            Cargando
+          </h1>
+        </section>
+      </main>
+    );
   }
 
   if (status === "authenticated") {

@@ -40,6 +40,9 @@ const SideMenu = () => {
           <NavigationButton text="Usuarios" link="/users" />
         </PrivateComponent>
       </section>
+      <section className="flex flex-col items-center gap-2 mt-auto">
+        <NavigationButton text="Cerrar Sesión" link="/api/auth/signout" />
+      </section>
     </aside>
   );
 };

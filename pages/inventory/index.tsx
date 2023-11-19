@@ -2,10 +2,22 @@ import AddMovementDialog from "@/components/inventory/AddMovementDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { notify } from "@/utils/toast";
-import { get } from "http";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
 const Inventory = () => {
+  const { status } = useSession();
+
+  const setView = () => {
+    if (status === "unauthenticated") {
+      window.open("/", "_self");
+    }
+  };
+
+  useEffect(() => {
+    setView();
+  }, [status]);
+
   const [materials, setMaterials] = useState([
     {
       id: "",
@@ -171,16 +183,23 @@ const Inventory = () => {
               <thead className="bg-[#2D8F1D]">
                 <tr>
                   <td className="px-4 py-2">Identificador</td>
+                  <td className="px-4 py-2">Fecha</td>
                   <td className="px-4 py-2">Entrada</td>
                   <td className="px-4 py-2">Salida</td>
                   <td className="px-4 py-2">Responsable</td>
                 </tr>
               </thead>
               <tbody>
-                {selectedMaterialId
+                {selectedMaterialId && inventory[0].id !== ""
                   ? inventory.map((movement) => (
                       <tr key={movement.id}>
                         <td className="border px-4 py-2">{movement.id}</td>
+                        <td className="border px-4 py-2">
+                          {new Date(movement.createdAt)
+                            .toLocaleDateString()
+                            .split("/")
+                            .join("-")}
+                        </td>
                         <td className="border px-4 py-2">
                           {movement.movementType === "ENTRADA"
                             ? movement.quantity
