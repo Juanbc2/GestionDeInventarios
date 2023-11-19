@@ -1,9 +1,20 @@
+import LineChart from "@/components/charts/linechart";
 import AddMovementDialog from "@/components/inventory/AddMovementDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { notify } from "@/utils/toast";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
+
+interface inventory {
+  id: string;
+  createdAt: string;
+  movementType: string;
+  quantity: string;
+  createdBy: {
+    name: string;
+  };
+}
 
 const Inventory = () => {
   const { status } = useSession();
@@ -92,8 +103,12 @@ const Inventory = () => {
           },
         }
       ).then((res) => res.json());
-      if (result.movements.length > 0) setInventory(result.movements);
-      else {
+      if (result.movements.length > 0) {
+        setInventory(JSON.parse(JSON.stringify(result.movements)));
+        calculateInventoryByQuantity(
+          JSON.parse(JSON.stringify(result.movements))
+        );
+      } else {
         setInventory([
           {
             id: "",
@@ -113,6 +128,30 @@ const Inventory = () => {
         "No se pudo obtener la lista de movimientos de inventario"
       );
     }
+  };
+
+  const [inventoryByQuantity, setInventoryByQuantity] = useState([
+    {
+      createdAt: "",
+      quantity: "",
+    },
+  ]);
+
+  const [totalBalance, setTotalBalance] = useState(0);
+
+  const calculateInventoryByQuantity = (inventoryQuantity: inventory[]) => {
+    let quantity = 0;
+    inventoryQuantity.map((movement) => {
+      if (movement.movementType === "ENTRADA") {
+        quantity += parseInt(movement.quantity);
+        movement.quantity = quantity.toString();
+      } else {
+        quantity -= parseInt(movement.quantity);
+        movement.quantity = quantity.toString();
+      }
+    });
+    setTotalBalance(quantity);
+    setInventoryByQuantity(inventoryQuantity);
   };
 
   const [open, setOpen] = useState(false);
@@ -139,7 +178,7 @@ const Inventory = () => {
   }, [selectedMaterial]);
 
   return (
-    <main className="flex font-medium w-screen h-screen overflow-hidden">
+    <main className="flex font-medium w-screen h-screen">
       <SideMenu />
       <AddMovementDialog
         open={open}
@@ -221,8 +260,12 @@ const Inventory = () => {
           </div>
         </section>
         <section>
-          {/* TODO Graph */}
-          Gráfica
+          {selectedMaterialId && inventory[0].id !== "" ? (
+            <LineChart
+              inventory={inventoryByQuantity}
+              totalBalance={totalBalance.toString()}
+            />
+          ) : null}
         </section>
       </div>
     </main>
