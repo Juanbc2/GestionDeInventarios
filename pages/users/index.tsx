@@ -1,4 +1,5 @@
 import ProtectedRoute from "@/components/ProtectedRoute";
+import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import EditUserDialog from "@/components/users/editUserDialog";
 import { useEffect, useState } from "react";
@@ -127,12 +128,7 @@ const Users = () => {
                       {user.roleId == null ? "Sin rol" : getRoleById(user.roleId)}
                     </td>
                     <td className="border px-4 py-2">
-                      <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                        onClick={() => handleClickOpen(user.id)}
-                      >
-                        Editar
-                      </button>
+                      <PrimaryButton text="Editar" onClick={() => handleClickOpen(user.id)} />
                     </td>
                   </tr>
                 ))}

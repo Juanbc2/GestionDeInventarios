@@ -5,7 +5,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 type ResponseData = {
     materials?: Material[];
     message?: string;
-    };
+    newMaterial?: Material;
+};
 
 const MaterialsApi = async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
     try {
@@ -15,6 +16,17 @@ const MaterialsApi = async (req: NextApiRequest, res: NextApiResponse<ResponseDa
         res.status(200).json({ materials });
         }
         //TODO crear metodo POST para crear materiales
+        if (req.method === "POST") {
+            const { name, quantity, userId } = req.body;
+            const newMaterial = await prisma.material.create({
+                data: {
+                    name,
+                    quantity,
+                    userId,
+                },
+            });
+            return res.status(201).json({ newMaterial });
+        }
         return res.status(404).json({ message: "Not Found" });
     }catch (err) {
         return res.status(405).json({ message: "Method not allowed" });
