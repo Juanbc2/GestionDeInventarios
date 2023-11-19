@@ -45,28 +45,27 @@ const Materials = () => {
     <main className="flex flex-row bg-slate-200 font-medium w-auto h-screen">
       <SideMenu />
       <AddMaterialDialog open={open} selectedValue={""} onClose={handleClose} />
-      <div className="flex flex-col p-4 items-center gap-4">
-        <h1 className="text-center">Gestión de materiales</h1>
-        <section className="flex flex-col p-4 items-center">
-          <ProtectedRoute roleName="ADMIN">
-            <div className="flex justify-end w-full">
-              <PrimaryButton
-                text="Agregar material"
-                onClick={() => setOpen(true)}
-              />
-            </div>
-          </ProtectedRoute>
-          <table>
-            <thead>
-              <tr>
-                <th className="px-4 py-2">Identificador</th>
-                <th className="px-4 py-2">Fecha de creación</th>
-                <th className="px-4 py-2">Nombre</th>
-                <th className="px-4 py-2">Saldo</th>
-                <th className="px-4 py-2">Creado por</th>
-              </tr>
-            </thead>
-            <tbody>
+      <div className="flex flex-col py-12 gap-12 mx-28 w-full">
+      <h1 className="flex justify-center h-32" style={{fontWeight: 400, fontSize: 48}}>Gestión de Materiales</h1>
+      <div className="flex flex-col gap-4">
+        <ProtectedRoute roleName="ADMIN">
+          <div className="flex justify-end w-full">
+            <PrimaryButton text="Agregar material" onClick={() => setOpen(true)} />
+          </div>
+        </ProtectedRoute>
+      
+        <section className="flex flex-col w-full border-2">
+          <table className="table-auto">
+            <thead className="bg-[#2D8F1D]">
+                <tr>
+                  <td className="px-4 py-2">Identificador</td>
+                  <td className="px-4 py-2">Fecha de creación</td>
+                  <td className="px-4 py-2">Nombre</td>
+                  <td className="px-4 py-2">Saldo</td>
+                  <td className="px-4 py-2">Creado por</td>
+                </tr>
+              </thead>
+              <tbody>
               {materials.map((material) => (
                 <tr key={material.id}>
                   <td className="border px-4 py-2">{material.id}</td>
@@ -80,9 +79,10 @@ const Materials = () => {
                   </td>
                 </tr>
               ))}
-            </tbody>
-          </table>
-        </section>
+              </tbody>
+            </table>
+          </section>
+        </div>
       </div>
     </main>
   );
