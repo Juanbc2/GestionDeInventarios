@@ -72,16 +72,16 @@ const Users = () => {
       selectUser
         ? selectUser
         : {
-          id: "",
-          email: "",
-          roleId: "",
-          name: "",
-        }
+            id: "",
+            email: "",
+            roleId: "",
+            name: "",
+          }
     );
     setOpen(true);
   };
 
-  const handleClose = (value: string) => {
+  const handleClose = () => {
     getUsers();
     setOpen(false);
   };
@@ -125,10 +125,15 @@ const Users = () => {
                     <td className="border px-4 py-2">{user.name}</td>
                     <td className="border px-4 py-2">{user.email}</td>
                     <td className="border px-4 py-2">
-                      {user.roleId == null ? "Sin rol" : getRoleById(user.roleId)}
+                      {user.roleId == null
+                        ? "Sin rol"
+                        : getRoleById(user.roleId)}
                     </td>
                     <td className="border px-4 py-2">
-                      <PrimaryButton text="Editar" onClick={() => handleClickOpen(user.id)} />
+                      <PrimaryButton
+                        text="Editar"
+                        onClick={() => handleClickOpen(user.id)}
+                      />
                     </td>
                   </tr>
                 ))}
