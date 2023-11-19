@@ -178,7 +178,7 @@ const Inventory = () => {
   }, [selectedMaterial]);
 
   return (
-    <main className="flex font-medium w-screen h-screen">
+    <main className="flex font-medium w-screen h-screen" style={{ overflowX: 'hidden' }}>
       <SideMenu />
       <AddMovementDialog
         open={open}
@@ -191,7 +191,7 @@ const Inventory = () => {
           className="flex justify-center h-32"
           style={{ fontWeight: 400, fontSize: 48 }}
         >
-          Gestión de Inventarios
+          Gesti&oacute;n de Inventarios
         </h1>
         <section className="flex flex-col gap-4">
           <div className="flex justify-between">
@@ -216,10 +216,10 @@ const Inventory = () => {
 
           <div
             className="flex flex-col w-full border-2"
-            style={{ maxHeight: "300px", overflow: "auto" }}
+            style={{ maxHeight: "200px", overflow: "auto" }}
           >
             <table className="table-auto">
-              <thead className="bg-[#2D8F1D]">
+              <thead className="bg-[#2D8F1D] sticky top-0">
                 <tr>
                   <td className="px-4 py-2">Identificador</td>
                   <td className="px-4 py-2">Fecha</td>
@@ -230,8 +230,8 @@ const Inventory = () => {
               </thead>
               <tbody>
                 {selectedMaterialId && inventory[0].id !== ""
-                  ? inventory.map((movement) => (
-                      <tr key={movement.id}>
+                  ? inventory.map((movement, index) => (
+                      <tr key={movement.id} style={{ backgroundColor: index % 2 !== 0 ? '#f2f2f2' : 'transparent' }}>
                         <td className="border px-4 py-2">{movement.id}</td>
                         <td className="border px-4 py-2">
                           {new Date(movement.createdAt)
@@ -259,7 +259,7 @@ const Inventory = () => {
             </table>
           </div>
         </section>
-        <section>
+        <section className= "flex self-center" style={{ maxHeight: "400px", maxWidth: "1000px"}}>
           {selectedMaterialId && inventory[0].id !== "" ? (
             <LineChart
               inventory={inventoryByQuantity}

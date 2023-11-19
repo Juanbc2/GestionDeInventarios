@@ -104,9 +104,10 @@ const Users = () => {
         />
         <div className="flex flex-col py-12 gap-[104px] mx-28 w-full">
           <h1 className="flex justify-center h-32" style={{fontWeight: 400, fontSize: 48}}>Gestión de Usuarios</h1>
-          <section className="flex flex-col w-full border-2">
+          <section className="flex flex-col w-full border-2"
+            style={{overflow: "auto"}}>
             <table className="table-auto">
-              <thead className="bg-[#2D8F1D]">
+              <thead className="bg-[#2D8F1D] sticky top-0">
                 <tr>
                   <td className="px-4 py-2">Identificador</td>
                   <td className="px-4 py-2">Nombre</td>

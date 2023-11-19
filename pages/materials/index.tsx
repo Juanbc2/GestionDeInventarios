@@ -1,3 +1,4 @@
+import PrivateComponent from "@/components/PrivateComponent";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import AddMaterialDialog from "@/components/materials/AddMaterialDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
@@ -63,21 +64,22 @@ const Materials = () => {
           className="flex justify-center h-32"
           style={{ fontWeight: 400, fontSize: 48 }}
         >
-          Gestión de Materiales
+          Gesti&oacute;n de Materiales
         </h1>
         <div className="flex flex-col gap-4">
-          <ProtectedRoute roleName="ADMIN">
+          <PrivateComponent roleName="ADMIN">
             <div className="flex justify-end w-full">
               <PrimaryButton
                 text="Agregar material"
                 onClick={() => setOpen(true)}
               />
             </div>
-          </ProtectedRoute>
+          </PrivateComponent>
 
-          <section className="flex flex-col w-full border-2">
+          <section className="flex flex-col w-full border-2"
+            style={{overflow: "auto"}}>
             <table className="table-auto">
-              <thead className="bg-[#2D8F1D]">
+              <thead className="bg-[#2D8F1D] sticky top-0">
                 <tr>
                   <td className="px-4 py-2">Identificador</td>
                   <td className="px-4 py-2">Fecha de creación</td>
@@ -87,8 +89,8 @@ const Materials = () => {
                 </tr>
               </thead>
               <tbody>
-                {materials.map((material) => (
-                  <tr key={material.id}>
+                {materials.map((material, index) => (
+                  <tr key={material.id} style={{ backgroundColor: index % 2 !== 0 ? '#f2f2f2' : 'transparent' }}>
                     <td className="border px-4 py-2">{material.id}</td>
                     <td className="border px-4 py-2">
                       {new Date(material.createdAt)
