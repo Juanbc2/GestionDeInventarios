@@ -32,7 +32,6 @@ const MaterialsApi = async (
     }
     return res.status(404).json({ message: "Not Found" });
   } catch (err) {
-    console.log(err);
     return res.status(405).json({ message: "Method not allowed" });
   }
 };

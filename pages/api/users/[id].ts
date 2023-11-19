@@ -19,9 +19,6 @@ const userApi = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(200).json({ updatedUser });
   }
 
-  if (req.method === "DELETE") {
-  }
-
   return res.status(405).json({ message: "Method not allowed" });
 };
 
