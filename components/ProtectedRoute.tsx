@@ -28,4 +28,4 @@ const ProtectedRoute = ({ children, roleName }: ProtectedRouteProps) => {
   );
 };
 
-export default ProtectedRoute;
+export {ProtectedRoute};

@@ -1,7 +1,7 @@
-import ProtectedRoute from "@/components/ProtectedRoute";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
-import EditUserDialog from "@/components/users/editUserDialog";
+import {EditUserDialog} from "@/components/users/editUserDialog";
 import { useEffect, useState } from "react";
 
 const Users = () => {
@@ -15,7 +15,7 @@ const Users = () => {
 
   const getRoles = async () => {
     try {
-      let result = await fetch("http://localhost:3000/api/roles", {
+      const result = await fetch("http://localhost:3000/api/roles", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +28,7 @@ const Users = () => {
   };
 
   const getRoleById = (id: string) => {
-    let role = roles.find((role) => role.id === id);
+    const role = roles.find((role) => role.id === id);
     return role?.name;
   };
 
@@ -45,7 +45,7 @@ const Users = () => {
 
   const getUsers = async () => {
     try {
-      let result = await fetch("http://localhost:3000/api/users", {
+      const result = await fetch("http://localhost:3000/api/users", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -67,21 +67,21 @@ const Users = () => {
   });
 
   const handleClickOpen = (id: string) => {
-    let selectUser = users.find((user) => user.id === id);
+    const selectUser = users.find((user) => user.id === id);
     setSelectedUser(
       selectUser
         ? selectUser
         : {
-          id: "",
-          email: "",
-          roleId: "",
-          name: "",
-        }
+            id: "",
+            email: "",
+            roleId: "",
+            name: "",
+          }
     );
     setOpen(true);
   };
 
-  const handleClose = (value: string) => {
+  const handleClose = () => {
     getUsers();
     setOpen(false);
   };
@@ -103,9 +103,16 @@ const Users = () => {
           selectedUser={selectedUser}
         />
         <div className="flex flex-col py-12 gap-[104px] mx-28 w-full">
-          <h1 className="flex justify-center h-32" style={{fontWeight: 400, fontSize: 48}}>Gestión de Usuarios</h1>
-          <section className="flex flex-col w-full border-2"
-            style={{overflow: "auto"}}>
+          <h1
+            className="flex justify-center h-32"
+            style={{ fontWeight: 400, fontSize: 48 }}
+          >
+            Gestión de Usuarios
+          </h1>
+          <section
+            className="flex flex-col w-full border-2"
+            style={{ overflow: "auto" }}
+          >
             <table className="table-auto">
               <thead className="bg-[#2D8F1D] sticky top-0">
                 <tr>
@@ -118,15 +125,26 @@ const Users = () => {
               </thead>
               <tbody>
                 {users.map((user, index) => (
-                  <tr key={user.id} style={{ backgroundColor: index % 2 !== 0 ? '#f2f2f2' : 'transparent' }}>
+                  <tr
+                    key={user.id}
+                    style={{
+                      backgroundColor:
+                        index % 2 !== 0 ? "#f2f2f2" : "transparent",
+                    }}
+                  >
                     <td className="border px-4 py-2">{user.id}</td>
                     <td className="border px-4 py-2">{user.name}</td>
                     <td className="border px-4 py-2">{user.email}</td>
                     <td className="border px-4 py-2">
-                      {user.roleId == null ? "Sin rol" : getRoleById(user.roleId)}
+                      {user.roleId == null
+                        ? "Sin rol"
+                        : getRoleById(user.roleId)}
                     </td>
                     <th className="border px-4 py-2">
-                      <PrimaryButton text="Editar" onClick={() => handleClickOpen(user.id)} />
+                      <PrimaryButton
+                        text="Editar"
+                        onClick={() => handleClickOpen(user.id)}
+                      />
                     </th>
                   </tr>
                 ))}

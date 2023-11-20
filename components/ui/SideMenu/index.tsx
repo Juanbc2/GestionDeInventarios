@@ -1,10 +1,10 @@
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-import PrivateComponent from "@/components/PrivateComponent";
+import { PrivateComponent } from "@/components/PrivateComponent";
 import { NavigationButton } from "@/components/ui/SideMenu/NavigationButton";
 
 const SideMenu = () => {
-  const { data, status, update } = useSession();
+  const { data, status } = useSession();
 
   const [userData, setUserData] = useState({
     name: "",

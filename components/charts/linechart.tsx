@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -19,7 +19,7 @@ interface LinechartProps {
   }[];
 }
 
-export default function Linechart(props: LinechartProps) {
+const Linechart = (props: LinechartProps) => {
   const { inventory, totalBalance } = props;
   ChartJS.register(
     CategoryScale,
@@ -76,4 +76,6 @@ export default function Linechart(props: LinechartProps) {
   };
 
   return <Line options={options} data={data} style={{ height: "700px" }} />;
-}
+};
+
+export { Linechart };

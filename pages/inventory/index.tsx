@@ -1,5 +1,5 @@
-import LineChart from "@/components/charts/linechart";
-import AddMovementDialog from "@/components/inventory/AddMovementDialog";
+import { Linechart } from "@/components/charts/linechart";
+import { AddMovementDialog } from "@/components/inventory/AddMovementDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { notify } from "@/utils/toast";
@@ -70,7 +70,7 @@ const Inventory = () => {
   });
 
   const handleSelectedMaterial = (id: string) => {
-    let material = materials.find((material) => material.id === id);
+    const material = materials.find((material) => material.id === id);
     if (!material) {
       notify("Error", "No se pudo encontrar el material");
       return;
@@ -178,7 +178,10 @@ const Inventory = () => {
   }, [selectedMaterial]);
 
   return (
-    <main className="flex font-medium w-screen h-screen" style={{ overflowX: 'hidden' }}>
+    <main
+      className="flex font-medium w-screen h-screen"
+      style={{ overflowX: "hidden" }}
+    >
       <SideMenu />
       <AddMovementDialog
         open={open}
@@ -231,7 +234,13 @@ const Inventory = () => {
               <tbody>
                 {selectedMaterialId && inventory[0].id !== ""
                   ? inventory.map((movement, index) => (
-                      <tr key={movement.id} style={{ backgroundColor: index % 2 !== 0 ? '#f2f2f2' : 'transparent' }}>
+                      <tr
+                        key={movement.id}
+                        style={{
+                          backgroundColor:
+                            index % 2 !== 0 ? "#f2f2f2" : "transparent",
+                        }}
+                      >
                         <td className="border px-4 py-2">{movement.id}</td>
                         <td className="border px-4 py-2">
                           {new Date(movement.createdAt)
@@ -259,9 +268,12 @@ const Inventory = () => {
             </table>
           </div>
         </section>
-        <section className= "flex self-center" style={{ maxHeight: "400px", maxWidth: "1000px"}}>
+        <section
+          className="flex self-center"
+          style={{ maxHeight: "400px", maxWidth: "1000px" }}
+        >
           {selectedMaterialId && inventory[0].id !== "" ? (
-            <LineChart
+            <Linechart
               inventory={inventoryByQuantity}
               totalBalance={totalBalance.toString()}
             />

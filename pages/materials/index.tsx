@@ -1,6 +1,5 @@
-import PrivateComponent from "@/components/PrivateComponent";
-import ProtectedRoute from "@/components/ProtectedRoute";
-import AddMaterialDialog from "@/components/materials/AddMaterialDialog";
+import { PrivateComponent } from "@/components/PrivateComponent";
+import { AddMaterialDialog } from "@/components/materials/AddMaterialDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { notify } from "@/utils/toast";
@@ -76,8 +75,10 @@ const Materials = () => {
             </div>
           </PrivateComponent>
 
-          <section className="flex flex-col w-full border-2"
-            style={{overflow: "auto"}}>
+          <section
+            className="flex flex-col w-full border-2"
+            style={{ overflow: "auto" }}
+          >
             <table className="table-auto">
               <thead className="bg-[#2D8F1D] sticky top-0">
                 <tr>
@@ -90,7 +91,13 @@ const Materials = () => {
               </thead>
               <tbody>
                 {materials.map((material, index) => (
-                  <tr key={material.id} style={{ backgroundColor: index % 2 !== 0 ? '#f2f2f2' : 'transparent' }}>
+                  <tr
+                    key={material.id}
+                    style={{
+                      backgroundColor:
+                        index % 2 !== 0 ? "#f2f2f2" : "transparent",
+                    }}
+                  >
                     <td className="border px-4 py-2">{material.id}</td>
                     <td className="border px-4 py-2">
                       {new Date(material.createdAt)

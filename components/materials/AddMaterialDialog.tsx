@@ -5,14 +5,13 @@ import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
 
-
 interface AddMaterialDialogProps {
   open: boolean;
   selectedValue: string;
   onClose: (value: string) => void;
 }
 
-function AddMaterialDialog(props: AddMaterialDialogProps) {
+const AddMaterialDialog = (props: AddMaterialDialogProps) => {
   const { onClose, selectedValue, open } = props;
   const { data } = useSession();
 
@@ -34,7 +33,7 @@ function AddMaterialDialog(props: AddMaterialDialogProps) {
 
   const getUsers = async () => {
     try {
-      let result = await fetch("http://localhost:3000/api/users", {
+      const result = await fetch("http://localhost:3000/api/users", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -47,13 +46,13 @@ function AddMaterialDialog(props: AddMaterialDialogProps) {
   };
 
   const getUserByEmail = (email?: string) => {
-    let user = users.find((user) => user.email === email);
+    const user = users.find((user) => user.email === email);
     return user;
   };
 
   const createMaterial = async () => {
     try {
-      let user = getUserByEmail(data?.user?.email);
+      const user = getUserByEmail(data?.user?.email);
       if (!user) {
         alert("No se pudo encontrar el usuario");
         return;
@@ -130,6 +129,6 @@ function AddMaterialDialog(props: AddMaterialDialogProps) {
       </DialogContent>
     </Dialog>
   );
-}
+};
 
-export default AddMaterialDialog;
+export { AddMaterialDialog };

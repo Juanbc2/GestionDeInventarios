@@ -5,9 +5,10 @@ import { NextApiRequest, NextApiResponse } from "next";
 interface ResponseData {
   users?: User;
   message?: string;
+  updatedUser?: User;
 }
 
-const userApi = async (req: NextApiRequest, res: NextApiResponse) => {
+const userApi = async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
   if (req.method === "PUT") {
     const userId = req.query.id as string;
     const updatedUser = await prisma.user.update({

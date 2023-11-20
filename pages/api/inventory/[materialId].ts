@@ -7,7 +7,7 @@ type ResponseData = {
   message?: string;
 };
 
-const inventoryApi = async (req: NextApiRequest, res: NextApiResponse) => {
+const inventoryApi = async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
   if (req.method === "GET") {
     const materialId = req.query.materialId as string;
     const movements = await prisma.inventoryMovement.findMany({

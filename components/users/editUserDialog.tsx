@@ -1,11 +1,10 @@
 import * as React from "react";
-import { DialogTitle, DialogContent, DialogContentText } from "@mui/material";
+import { DialogTitle, DialogContent } from "@mui/material";
 import Dialog from "@mui/material/Dialog";
 import { useEffect } from "react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
-import { DialogButton } from "@/components/ui/DialogButton";
-import { PrimaryButton } from "../ui/PrimaryButton";
+import { PrimaryButton } from "@/components/ui/PrimaryButton";
 
 interface HireDialogProps {
   open: boolean;
@@ -25,7 +24,7 @@ interface roles {
   name: string;
 }
 
-function EditUserDialog(props: HireDialogProps) {
+const EditUserDialog = (props: HireDialogProps) => {
   const { onClose, selectedValue, open, roles, selectedUser } = props;
 
   const form = useForm({
@@ -52,7 +51,7 @@ function EditUserDialog(props: HireDialogProps) {
       return;
     }
     try {
-      let result = await fetch(
+      const result = await fetch(
         `http://localhost:3000/api/users/${form.values.id}`,
         {
           method: "PUT",
@@ -82,7 +81,10 @@ function EditUserDialog(props: HireDialogProps) {
 
   return (
     <Dialog onClose={handleClose} open={open} maxWidth="xl">
-      <DialogTitle className="flex justify-center" style={{fontWeight: 400, fontSize: 32}}>
+      <DialogTitle
+        className="flex justify-center"
+        style={{ fontWeight: 400, fontSize: 32 }}
+      >
         Edición de usuario
       </DialogTitle>
       <DialogContent className="flex flex-col flex-wrap justify-center">
@@ -100,7 +102,8 @@ function EditUserDialog(props: HireDialogProps) {
               <tr>
                 <td className="border px-4 py-2">{form.values.id}</td>
                 <td className="border px-4 py-2 ">
-                  <input className="py-2 px-4 rounded hover:bg-[#f2f2f2]"
+                  <input
+                    className="py-2 px-4 rounded hover:bg-[#f2f2f2]"
                     type="text"
                     value={form.values.name}
                     onChange={(e) =>
@@ -110,7 +113,8 @@ function EditUserDialog(props: HireDialogProps) {
                 </td>
                 <td className="border px-4 py-2">{form.values.email}</td>
                 <td className="border px-4 py-2">
-                  <select className="py-2 px-4 rounded hover:bg-[#f2f2f2]"
+                  <select
+                    className="py-2 px-4 rounded hover:bg-[#f2f2f2]"
                     onChange={(e) =>
                       form.setFieldValue("roleId", e.target.value)
                     }
@@ -127,15 +131,14 @@ function EditUserDialog(props: HireDialogProps) {
             </tbody>
           </table>
         </div>
-        <br/>              
+        <br />
         <div className="flex justify-center items-center gap-20">
           <PrimaryButton text="Actualizar" onClick={updateUser} />
           <PrimaryButton text="Cerrar" onClick={handleClose} />
         </div>
-
       </DialogContent>
     </Dialog>
   );
-}
+};
 
-export default EditUserDialog;
+export { EditUserDialog };

@@ -14,4 +14,4 @@ const PrivateComponent = ({ children, roleName }: PrivateComponentProps) => {
   return null;
 };
 
-export default PrivateComponent;
+export { PrivateComponent };
