@@ -2,6 +2,7 @@ import { PrivateComponent } from "@/components/PrivateComponent";
 import { AddMaterialDialog } from "@/components/materials/AddMaterialDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
+import { api_url } from "@/service/url";
 import { notify } from "@/utils/toast";
 import { useSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
@@ -31,7 +32,7 @@ const Materials = () => {
 
   const getMaterials = async () => {
     try {
-      const result = await fetch("http://localhost:3000/api/materials", {
+      const result = await fetch(`${api_url}/api/materials`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

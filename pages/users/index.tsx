@@ -1,7 +1,8 @@
 import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
-import {EditUserDialog} from "@/components/users/editUserDialog";
+import { EditUserDialog } from "@/components/users/editUserDialog";
+import { api_url } from "@/service/url";
 import { useEffect, useState } from "react";
 
 const Users = () => {
@@ -15,7 +16,7 @@ const Users = () => {
 
   const getRoles = async () => {
     try {
-      const result = await fetch("http://localhost:3000/api/roles", {
+      const result = await fetch(`${api_url}/api/roles`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -45,7 +46,7 @@ const Users = () => {
 
   const getUsers = async () => {
     try {
-      const result = await fetch("http://localhost:3000/api/users", {
+      const result = await fetch(`${api_url}/api/users`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

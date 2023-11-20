@@ -2,6 +2,7 @@ import { Linechart } from "@/components/charts/linechart";
 import { AddMovementDialog } from "@/components/inventory/AddMovementDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
+import { api_url } from "@/service/url";
 import { notify } from "@/utils/toast";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
@@ -41,7 +42,7 @@ const Inventory = () => {
 
   const getMaterials = async () => {
     try {
-      const result = await fetch("http://localhost:3000/api/materials", {
+      const result = await fetch(`${api_url}/api/materials`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -95,7 +96,7 @@ const Inventory = () => {
     if (!selectedMaterialId) return;
     try {
       const result = await fetch(
-        `http://localhost:3000/api/inventory/${selectedMaterialId}`,
+        `${api_url}/api/inventory/${selectedMaterialId}`,
         {
           method: "GET",
           headers: {
@@ -270,7 +271,7 @@ const Inventory = () => {
         </section>
         <section
           className="flex self-center"
-          style={{ maxHeight: "400px", maxWidth: "1000px"}}
+          style={{ maxHeight: "400px", maxWidth: "1000px" }}
         >
           {selectedMaterialId && inventory[0].id !== "" ? (
             <Linechart
