@@ -38,7 +38,8 @@ const Linechart = (props: LinechartProps) => {
         text: `Saldo Actual: ${totalBalance} unidades.`,
         color: "#000",
         font: {
-          size: 20,
+          size: 20, 
+          bold: true
         },
       },
       legend: {
@@ -50,12 +51,20 @@ const Linechart = (props: LinechartProps) => {
         title: {
           display: true,
           text: "Fecha",
+          font: {
+            size: 15, 
+            bold: true
+          },
         },
       },
       y: {
         title: {
           display: true,
           text: "Saldo",
+          font: {
+            size: 15, 
+            bold: true
+          },
         },
       },
     },
@@ -69,13 +78,13 @@ const Linechart = (props: LinechartProps) => {
       {
         label: "Saldo",
         data: inventory.map((item) => item.quantity),
-        borderColor: "#2D8F1D",
-        backgroundColor: "#2D8F1D",
+        borderColor: "#10b981",
+        backgroundColor: "#6366f1",
       },
     ],
   };
 
-  return <Line options={options} data={data} style={{ height: "700px" }} />;
+  return <Line options={options} data={data} style={{ height: "700px"  }} />;
 };
 
 export { Linechart };

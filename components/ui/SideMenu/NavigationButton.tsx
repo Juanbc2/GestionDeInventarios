@@ -10,9 +10,9 @@ const NavigationButton = ({ text, link }: NavigationButtonProps) => {
     const router = useRouter();
 
     return (
-        <button className={`w-[230px] border-2 rounded-lg text-left
+        <button className={`w-[230px]  text-left rounded-3xl border-l-4 border-r-4 border-t border-b-2
         ${router.asPath === link
-                ? 'border-[#2D8F1D] hover:text-[#2D8F1D]'
+                ? 'border-[#10b981] hover:text-[#059669]'
                 : 'border-slate-950 hover:text-[#2D8F1D] hover:border-[#2D8F1D]'
             }`}>
             <Link

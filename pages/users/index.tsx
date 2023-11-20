@@ -114,7 +114,7 @@ const Users = () => {
             style={{ overflow: "auto" }}
           >
             <table className="table-auto">
-              <thead className="bg-[#2D8F1D] sticky top-0">
+              <thead className="bg-[#10b981] sticky top-0">
                 <tr>
                   <td className="px-4 py-2">Identificador</td>
                   <td className="px-4 py-2">Nombre</td>

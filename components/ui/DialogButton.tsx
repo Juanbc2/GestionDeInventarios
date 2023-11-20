@@ -12,7 +12,7 @@ const DialogButton = ({ text, onClick, type }: DialogButtonProps) => {
 
   return (
     <button
-      className="m-5 py-2 px-5 rounded-lg text-slate-50 bg-[#2D8F1D] hover:bg-green-800 font-bold text-lg"
+      className="m-5 py-2 px-5 rounded-lg text-slate-50 bg-[#10b981] hover:bg-[#059669] font-bold text-lg"
       onClick={() => {
         setIsCreateButtonDisabled(true);
         onClick();
