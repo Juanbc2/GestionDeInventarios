@@ -118,12 +118,8 @@ const AddMaterialDialog = (props: AddMaterialDialogProps) => {
               />
             </label>
             <div className="flex items-center gap-4">
-              <DialogButton
-                text="Agregar"
-                type="button"
-                onClick={createMaterial}
-              />
-              <DialogButton text="Cerrar" type="button" onClick={handleClose} />
+              <DialogButton text="Agregar" onClick={createMaterial} />
+              <DialogButton text="Cerrar" onClick={handleClose} />
             </div>
           </form>
         </div>

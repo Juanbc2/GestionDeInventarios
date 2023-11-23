@@ -139,12 +139,8 @@ const AddMovementDialog = (props: AddMovementDialogProps) => {
               />
             </label>
             <div className="flex items-center gap-4">
-              <DialogButton
-                text="Agregar"
-                type="button"
-                onClick={createMovement}
-              />
-              <DialogButton text="Cerrar" type="button" onClick={handleClose} />
+              <DialogButton text="Agregar" onClick={createMovement} />
+              <DialogButton text="Cerrar" onClick={handleClose} />
             </div>
           </form>
         </div>
