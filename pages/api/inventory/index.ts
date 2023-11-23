@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { InventoryMovement } from "@prisma/client";
+import type { InventoryMovement } from "@prisma/client";
 import prisma from "@/service/prisma";
 
 type ResponseData = {

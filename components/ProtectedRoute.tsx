@@ -1,9 +1,10 @@
+import type { Enum_RoleName } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  roleName: string;
+  roleName: Enum_RoleName;
 }
 
 const ProtectedRoute = ({ children, roleName }: ProtectedRouteProps) => {

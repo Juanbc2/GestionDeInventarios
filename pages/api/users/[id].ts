@@ -1,5 +1,5 @@
 import prisma from "@/service/prisma";
-import { User } from "@prisma/client";
+import type { User } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
 interface ResponseData {

@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Role } from "@prisma/client";
+import type { Role } from "@prisma/client";
 import prisma from "@/service/prisma";
 
 interface ResponseData {
