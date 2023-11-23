@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 
 interface PrivateComponentProps {
   children: React.ReactNode;
-  roleName: Enum_RoleName;
+  roleName: String;
 }
 
 const PrivateComponent = ({ children, roleName }: PrivateComponentProps) => {
