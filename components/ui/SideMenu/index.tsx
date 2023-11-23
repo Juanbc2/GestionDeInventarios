@@ -21,18 +21,19 @@ const SideMenu = () => {
   }, [data, status]);
 
   return (
-    <aside className="gap-16 px-5 py-2 top-0 bg-[#f2f2f2] flex-col flex h-full w-[330px]">
-      <section>
-        <div className="flex flex-col items-center gap-2 mt-12">
-          <img
-            className="h-[150px] w-[150px] rounded-full"
-            src={userData.image}
-            alt="Profile pic"
-          />
-          <span className="text-gray-500">{userData.name}</span>
-        </div>
-        <br></br>
-      </section>
+    <aside className="gap-16 px-5 py-2 top-0 bg-[#43a88a] flex-col flex h-full w-[260px]">
+  <section>
+    <div className="flex flex-col items-center gap-2 mt-12 relative">
+      <div className="h-[180px] w-[180px] rounded-full overflow-hidden">
+        <img
+          className="h-full w-full transition-opacity duration-1000 ease-in-out hover:opacity-60"
+          src={userData.image}
+          alt="Profile pic"
+        />
+      </div>
+      <span className="text-gray-100 font-light" style={{fontSize:'25px', fontFamily: 'Roboto, serif' }}>{userData.name}</span>
+    </div>
+  </section>
       <section className="flex flex-col items-center gap-2">
         <NavigationButton text="Inventarios" link="/inventory" />
         <NavigationButton text="Materiales" link="/materials" />

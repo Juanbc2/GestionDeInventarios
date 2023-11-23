@@ -6,7 +6,8 @@ interface PrimaryButtonProps {
 const PrimaryButton = ({ text, onClick }: PrimaryButtonProps) => {
   return (
     <button
-      className="bg-[#10b981] hover:bg-[#059669] text-white font-bold py-2 px-4 rounded"
+      className="bg-[#0c1114] hover:bg-[#2e8d99] text-white  py-2 px-4 rounded font-bold"
+      style={{ fontFamily: 'Copperplate Gothic, serif'}}
       onClick={onClick}
     >
       {text}

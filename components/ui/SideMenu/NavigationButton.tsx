@@ -12,8 +12,8 @@ const NavigationButton = ({ text, link }: NavigationButtonProps) => {
     return (
         <button className={`w-[230px]  text-left rounded-3xl border-l-4 border-r-4 border-t border-b-2
         ${router.asPath === link
-                ? 'border-[#10b981] hover:text-[#059669]'
-                : 'border-slate-950 hover:text-[#2D8F1D] hover:border-[#2D8F1D]'
+                ? 'border-[#ffffff] hover:text-[#9cc4c0]'
+                : 'border-[#ffffff] hover:text-[#ffffff] hover:text-[#000000]'
             }`}>
             <Link
                 aria-haspopup='false'

@@ -193,7 +193,13 @@ const Inventory = () => {
       <div className="flex flex-col py-12 gap-12 mx-28 w-full">
         <h1
           className="flex justify-center h-32"
-          style={{ fontWeight: 400, fontSize: 48 }}
+          style={{ fontWeight: 400,  fontSize: 60,  
+                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' , 
+                    borderRadius: '10px', padding: '10px' , transition: 'transform 0.3s ease-in-out', 
+                    cursor: 'pointer'
+                  }}
+                  onMouseEnter={(e) => (e.target as HTMLElement).style.transform = 'scale(1.3)'}
+                  onMouseLeave={(e) =>(e.target as HTMLElement).style.transform = 'scale(1)'}  
         >
           Gesti&oacute;n de Inventarios
         </h1>
@@ -220,7 +226,7 @@ const Inventory = () => {
 
           <div
             className="flex flex-col w-full border-2"
-            style={{ maxHeight: "200px", overflow: "auto" }}
+            style={{ maxHeight: "200px", overflow: "auto", textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'  }}
           >
             <table className="table-auto">
               <thead className="bg-[#10b981] sticky top-0">

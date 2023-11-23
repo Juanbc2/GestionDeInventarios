@@ -12,18 +12,21 @@ const DialogButton = ({ text, onClick, type }: DialogButtonProps) => {
 
   return (
     <button
-      className="m-5 py-2 px-5 rounded-lg text-slate-50 bg-[#10b981] hover:bg-[#059669] font-bold text-lg"
-      onClick={() => {
-        setIsCreateButtonDisabled(true);
-        onClick();
-      }}
-      type={type}
-    >
-      {isCreateButtonDisabled ? (
-        <CircularProgress size={15} color="inherit" />
-      ) : null}{" "}
-      {text}
-    </button>
+    className="m-5 py-2 px-5 rounded-lg text-slate-50 bg-[#10aeb9] hover:bg-[#05965a] font-bold text-lg"
+    style={{ fontFamily: 'Copperplate Gothic, serif', fontWeight: 'bold' }}
+    onClick={() => {
+      setIsCreateButtonDisabled(true);
+      onClick();
+    }}
+  >
+    {isCreateButtonDisabled ? (
+      <CircularProgress size={15} color="inherit" />
+    ) : null}{" "}
+    {text}
+  </button>
+  
+
+
   );
 };
 
