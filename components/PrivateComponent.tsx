@@ -1,9 +1,8 @@
-import { Enum_RoleName } from "@prisma/client";
 import { useSession } from "next-auth/react";
 
 interface PrivateComponentProps {
   children: React.ReactNode;
-  roleName: String;
+  roleName: string;
 }
 
 const PrivateComponent = ({ children, roleName }: PrivateComponentProps) => {
