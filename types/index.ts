@@ -49,6 +49,6 @@ export interface InventoryMovementWithCreatedByQuery {
 }
 
 export type inventoryByQuantityType = {
-  createdAt: string;
+  createdAt: Date;
   quantity: number;
 };

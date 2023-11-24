@@ -15,8 +15,6 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 
 const Inventory = () => {
-
-
   const { materials } = useGetMaterialsWithCreatedBy();
 
   const [selectedMaterialId, setSelectedMaterialId] = useState("");
@@ -94,10 +92,7 @@ const Inventory = () => {
     const inventoryByQuantityAux = [] as inventoryByQuantityType[];
     inventoryQuantity.map((movement) => {
       inventoryByQuantityAux.push({
-        createdAt: new Date(movement.createdAt)
-          .toLocaleDateString()
-          .split("/")
-          .join("-"),
+        createdAt: new Date(movement.createdAt),
         quantity: movement.quantity,
       });
     });
