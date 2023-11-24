@@ -17,15 +17,15 @@ const ProtectedRoute = ({ children, roleName }: ProtectedRouteProps) => {
   return (
     <main className="flex flex-col h-screen w-full items-center justify-center">
       <h1 className="text-red-500 text-4xl">
-        Acceso denegado, debe iniciar sesión
+        Acceso denegado, no tiene permisos para entrar aquí.
       </h1>
-      <Link href="/">
+      <Link href="/inventory">
         <span className="text-blue-500 font-bold text-xl">
-          Volver al inicio
+          Volver al inventario
         </span>
       </Link>
     </main>
   );
 };
 
-export {ProtectedRoute};
+export { ProtectedRoute };

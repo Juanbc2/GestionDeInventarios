@@ -29,7 +29,7 @@ const PrivateRoute = ({ children }: PrivateRouteProps) => {
   return (
     <main className="flex flex-col h-screen w-full items-center justify-center">
       <h1 className="text-red-500 text-4xl">
-        Acceso denegado, no tiene permisos para entrar aquí.
+        Acceso denegado, debe iniciar sesión.
       </h1>
       <Link href="/">
         <span className="text-blue-500 font-bold text-xl">
