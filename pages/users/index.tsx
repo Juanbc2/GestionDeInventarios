@@ -2,106 +2,56 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { EditUserDialog } from "@/components/users/editUserDialog";
-import { useEffect, useState } from "react";
+import { useGetRoles } from "@/hooks/useGetRoles";
+import { useGetUsers } from "@/hooks/useGetUsers";
+import { User } from "@prisma/client";
+import { useState } from "react";
 
 const Users = () => {
   //------------roles------------
-  const [roles, setRoles] = useState([
-    {
-      id: "",
-      name: "",
-    },
-  ]);
 
-  const getRoles = async () => {
-    try {
-      const result = await fetch(`/api/roles`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((response) => response.json());
-      if (result.roles.length > 0) setRoles(result.roles);
-    } catch (err) {
-      return err;
-    }
-  };
+  const { roles } = useGetRoles();
+
+  const { users } = useGetUsers();
 
   const getRoleById = (id: string) => {
-    const role = roles.find((role) => role.id === id);
+    const role = roles?.find((role) => role.id === id);
     return role?.name;
   };
 
   //------------users----------
 
-  const [users, setUsers] = useState([
-    {
-      id: "",
-      email: "",
-      roleId: "",
-      name: "",
-    },
-  ]);
-
-  const getUsers = async () => {
-    try {
-      const result = await fetch(`/api/users`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((response) => response.json());
-      if (result.users.length > 0) setUsers(result.users);
-    } catch (err) {
-      return err;
-    }
-  };
-
   const [open, setOpen] = useState(false);
 
-  const [selectedUser, setSelectedUser] = useState({
-    id: "",
-    email: "",
-    roleId: "",
-    name: "",
-  });
+  const [selectedUser, setSelectedUser] = useState<User>();
 
   const handleClickOpen = (id: string) => {
-    const selectUser = users.find((user) => user.id === id);
-    setSelectedUser(
-      selectUser
-        ? selectUser
-        : {
-            id: "",
-            email: "",
-            roleId: "",
-            name: "",
-          }
-    );
+    const selectUser = users?.find((user) => user.id === id);
+    if (!selectUser) {
+      alert("No se pudo encontrar el usuario");
+      return;
+    }
+    setSelectedUser(selectUser);
     setOpen(true);
   };
 
   const handleClose = () => {
-    getUsers();
     setOpen(false);
   };
-
-  useEffect(() => {
-    getRoles();
-    getUsers();
-  }, []);
 
   return (
     <ProtectedRoute roleName="ADMIN">
       <main className="flex font-medium w-screen h-screen overflow-hidden">
         <SideMenu />
-        <EditUserDialog
-          open={open}
-          onClose={handleClose}
-          selectedValue=""
-          roles={roles}
-          selectedUser={selectedUser}
-        />
+        {roles && selectedUser ? (
+          <EditUserDialog
+            open={open}
+            onClose={handleClose}
+            selectedValue=""
+            roles={roles}
+            selectedUser={selectedUser}
+          />
+        ) : null}
         <div className="flex flex-col py-12 gap-[104px] mx-28 w-full">
           <h1
             className="flex justify-center h-32"
@@ -139,30 +89,32 @@ const Users = () => {
                 </tr>
               </thead>
               <tbody>
-                {users.map((user, index) => (
-                  <tr
-                    key={user.id}
-                    style={{
-                      backgroundColor:
-                        index % 2 !== 0 ? "#f2f2f2" : "transparent",
-                    }}
-                  >
-                    <td className="border px-4 py-2">{user.id}</td>
-                    <td className="border px-4 py-2">{user.name}</td>
-                    <td className="border px-4 py-2">{user.email}</td>
-                    <td className="border px-4 py-2">
-                      {user.roleId == null
-                        ? "Sin rol"
-                        : getRoleById(user.roleId)}
-                    </td>
-                    <th className="border px-4 py-2">
-                      <PrimaryButton
-                        text="Editar"
-                        onClick={() => handleClickOpen(user.id)}
-                      />
-                    </th>
-                  </tr>
-                ))}
+                {users
+                  ? users.map((user, index) => (
+                      <tr
+                        key={user.id}
+                        style={{
+                          backgroundColor:
+                            index % 2 !== 0 ? "#f2f2f2" : "transparent",
+                        }}
+                      >
+                        <td className="border px-4 py-2">{user.id}</td>
+                        <td className="border px-4 py-2">{user.name}</td>
+                        <td className="border px-4 py-2">{user.email}</td>
+                        <td className="border px-4 py-2">
+                          {user.roleId == null
+                            ? "Sin rol"
+                            : getRoleById(user.roleId)}
+                        </td>
+                        <th className="border px-4 py-2">
+                          <PrimaryButton
+                            text="Editar"
+                            onClick={() => handleClickOpen(user.id)}
+                          />
+                        </th>
+                      </tr>
+                    ))
+                  : null}
               </tbody>
             </table>
           </section>

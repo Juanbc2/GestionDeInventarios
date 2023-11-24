@@ -6,6 +6,7 @@ const API_SERVICES = {
   materials: `${API_URL}/materials`,
   inventory: `${API_URL}/inventory`,
   userById: (id: string) => `${API_URL}/users/${id}`,
+  inventoryByMaterialId: (id: string) => `${API_URL}/inventory/${id}`,
 };
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());

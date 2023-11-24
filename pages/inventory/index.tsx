@@ -2,9 +2,16 @@ import { Linechart } from "@/components/charts/linechart";
 import { AddMovementDialog } from "@/components/inventory/AddMovementDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
+import { useGetInventoryByMaterialId } from "@/hooks/useGetInventoryByMaterialId";
 import { useGetMaterialsWithCreatedBy } from "@/hooks/useGetMaterialWithCreatedBy";
-import { MaterialWithCreatedBy } from "@/types";
+import { API_SERVICES } from "@/service";
+import {
+  InventoryMovementWithCreatedBy,
+  MaterialWithCreatedBy,
+  inventoryByQuantityType,
+} from "@/types";
 import { notify } from "@/utils/toast";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
@@ -31,7 +38,7 @@ const Inventory = () => {
     setView();
   }, [status]);
 
-  const { materials, isLoading, error } = useGetMaterialsWithCreatedBy();
+  const { materials } = useGetMaterialsWithCreatedBy();
 
   const [selectedMaterialId, setSelectedMaterialId] = useState("");
   const [selectedMaterial, setSelectedMaterial] =
@@ -47,39 +54,30 @@ const Inventory = () => {
     setSelectedMaterial(material);
   };
 
-  const [inventory, setInventory] = useState([
-    {
-      id: "",
-      createdAt: "",
-      movementType: "",
-      quantity: "",
-      createdBy: {
-        name: "",
-      },
-    },
-  ]);
+  const [inventory, setInventory] = useState<InventoryMovementWithCreatedBy[]>(
+    []
+  );
 
   const getInventory = async () => {
     if (!selectedMaterialId) return;
     try {
-      const result = await fetch(`/api/inventory/${selectedMaterialId}`, {
+      const result = await axios.request({
+        url: API_SERVICES.inventoryByMaterialId(selectedMaterialId),
         method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json());
-      if (result.movements.length > 0) {
-        setInventory(JSON.parse(JSON.stringify(result.movements)));
+      });
+      if (result) {
+        setInventory(JSON.parse(JSON.stringify(result.data.movements)));
         calculateInventoryByQuantity(
-          JSON.parse(JSON.stringify(result.movements))
+          JSON.parse(JSON.stringify(result.data.movements))
         );
       } else {
         setInventory([
           {
             id: "",
-            createdAt: "",
+            materialId: "",
+            createdAt: new Date(),
             movementType: "",
-            quantity: "",
+            quantity: 0,
             createdBy: {
               name: "",
             },
@@ -95,28 +93,40 @@ const Inventory = () => {
     }
   };
 
-  const [inventoryByQuantity, setInventoryByQuantity] = useState([
-    {
-      createdAt: "",
-      quantity: "",
-    },
-  ]);
+  const [inventoryByQuantity, setInventoryByQuantity] =
+    useState<inventoryByQuantityType[]>();
 
   const [totalBalance, setTotalBalance] = useState(0);
 
-  const calculateInventoryByQuantity = (inventoryQuantity: inventory[]) => {
+  const calculateInventoryByQuantity = (
+    inventoryQuantity: InventoryMovementWithCreatedBy[]
+  ) => {
     let quantity = 0;
     inventoryQuantity.map((movement) => {
       if (movement.movementType === "ENTRADA") {
-        quantity += parseInt(movement.quantity);
-        movement.quantity = quantity.toString();
+        quantity += movement.quantity;
+        movement.quantity = quantity;
       } else {
-        quantity -= parseInt(movement.quantity);
-        movement.quantity = quantity.toString();
+        quantity -= movement.quantity;
+        movement.quantity = quantity;
       }
     });
     setTotalBalance(quantity);
-    setInventoryByQuantity(inventoryQuantity);
+    const inventoryByQuantityAux = [] as inventoryByQuantityType[];
+    inventoryQuantity.map((movement) => {
+      inventoryByQuantityAux.push({
+        createdAt: new Date(movement.createdAt)
+          .toLocaleDateString()
+          .split("/")
+          .join("-"),
+        quantity: movement.quantity,
+      });
+    });
+    if (!inventoryByQuantityAux) {
+      setInventoryByQuantity(undefined);
+      return;
+    }
+    setInventoryByQuantity(inventoryByQuantityAux);
   };
 
   const [open, setOpen] = useState(false);
@@ -215,7 +225,7 @@ const Inventory = () => {
                 </tr>
               </thead>
               <tbody>
-                {selectedMaterialId && inventory[0].id !== ""
+                {selectedMaterialId && inventory
                   ? inventory.map((movement, index) => (
                       <tr
                         key={movement.id}
@@ -255,7 +265,9 @@ const Inventory = () => {
           className="flex self-center"
           style={{ maxHeight: "400px", maxWidth: "1000px" }}
         >
-          {selectedMaterialId && inventory[0].id !== "" ? (
+          {selectedMaterialId &&
+          inventoryByQuantity &&
+          inventoryByQuantity?.length > 0 ? (
             <Linechart
               inventory={inventoryByQuantity}
               totalBalance={totalBalance.toString()}

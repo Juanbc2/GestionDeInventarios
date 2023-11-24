@@ -31,3 +31,24 @@ export interface MaterialWithCreatedByQuery {
 export interface InventoryMovementsQuery {
   inventoryMovements: InventoryMovement[];
 }
+
+export type InventoryMovementWithCreatedBy = {
+  createdBy: {
+    name: string | null;
+  };
+} & {
+  id: string;
+  materialId: string;
+  quantity: number;
+  createdAt: Date;
+  movementType: string;
+};
+
+export interface InventoryMovementWithCreatedByQuery {
+  inventoryMovements: InventoryMovementWithCreatedBy[];
+}
+
+export type inventoryByQuantityType = {
+  createdAt: string;
+  quantity: number;
+};

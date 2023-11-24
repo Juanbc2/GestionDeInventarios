@@ -10,13 +10,11 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
+import { inventoryByQuantityType } from "@/types";
 
 interface LinechartProps {
   totalBalance: string;
-  inventory: {
-    createdAt: string;
-    quantity: string;
-  }[];
+  inventory: inventoryByQuantityType[];
 }
 
 const Linechart = (props: LinechartProps) => {
@@ -38,8 +36,8 @@ const Linechart = (props: LinechartProps) => {
         text: `Saldo Actual: ${totalBalance} unidades.`,
         color: "#000",
         font: {
-          size: 20, 
-          bold: true
+          size: 20,
+          bold: true,
         },
       },
       legend: {
@@ -52,8 +50,8 @@ const Linechart = (props: LinechartProps) => {
           display: true,
           text: "Fecha",
           font: {
-            size: 15, 
-            bold: true
+            size: 15,
+            bold: true,
           },
         },
       },
@@ -62,8 +60,8 @@ const Linechart = (props: LinechartProps) => {
           display: true,
           text: "Saldo",
           font: {
-            size: 15, 
-            bold: true
+            size: 15,
+            bold: true,
           },
         },
       },
@@ -84,7 +82,7 @@ const Linechart = (props: LinechartProps) => {
     ],
   };
 
-  return <Line options={options} data={data} style={{ height: "700px"  }} />;
+  return <Line options={options} data={data} style={{ height: "700px" }} />;
 };
 
 export { Linechart };

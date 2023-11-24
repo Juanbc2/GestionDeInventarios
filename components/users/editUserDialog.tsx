@@ -7,18 +7,14 @@ import { notify } from "@/utils/toast";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { API_SERVICES } from "@/service";
 import axios from "axios";
+import { User } from "@prisma/client";
 
 interface HireDialogProps {
   open: boolean;
   selectedValue: string;
   onClose: (value: string) => void;
   roles: roles[];
-  selectedUser: {
-    id: string;
-    email: string;
-    roleId: string;
-    name: string;
-  };
+  selectedUser: User;
 }
 
 interface roles {
@@ -41,9 +37,9 @@ const EditUserDialog = (props: HireDialogProps) => {
   useEffect(() => {
     form.setValues({
       id: selectedUser.id,
-      email: selectedUser.email,
-      roleId: selectedUser.roleId,
-      name: selectedUser.name,
+      email: selectedUser.email as string,
+      roleId: selectedUser.roleId as string,
+      name: selectedUser.name as string,
     });
   }, [selectedUser]);
 
