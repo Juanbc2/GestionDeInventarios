@@ -20,8 +20,9 @@ const UsersApi = async (
   try {
     if (req.method === "GET") {
       const users = await prisma.user.findMany();
-      res.status(200).json({ users });
+      return res.status(200).json({ users });
     }
+
     if (req.method === "POST") {
       const { name, email, roleId } = req.body;
       const newUser = await prisma.user.create({

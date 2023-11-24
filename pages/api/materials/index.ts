@@ -25,7 +25,7 @@ const MaterialsApi = async (
           },
         },
       });
-      res.status(200).json({ materials });
+      return res.status(200).json({ materials });
     }
     if (req.method === "POST") {
       const { name, quantity, userId } = req.body;

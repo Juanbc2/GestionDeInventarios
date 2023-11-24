@@ -18,7 +18,7 @@ const InventoryApi = async (
 
     if (req.method === "GET") {
       const movements = await prisma.inventoryMovement.findMany();
-      res.status(200).json({ movements });
+      return res.status(200).json({ movements });
     }
     if (req.method === "POST") {
       await checkProtectedApi(req, res, "ADMIN");
