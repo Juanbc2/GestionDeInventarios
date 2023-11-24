@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
-import { api_url } from "@/service/url";
 
 interface HireDialogProps {
   open: boolean;
@@ -52,7 +51,7 @@ const EditUserDialog = (props: HireDialogProps) => {
       return;
     }
     try {
-      const result = await fetch(`${api_url}/api/users/${form.values.id}`, {
+      const result = await fetch(`/api/users/${form.values.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -116,8 +115,11 @@ const EditUserDialog = (props: HireDialogProps) => {
                     onChange={(e) =>
                       form.setFieldValue("roleId", e.target.value)
                     }
-                    value={form.values.roleId}
+                    value={form.values.roleId || ""}
                   >
+                    <option value="" disabled>
+                      Sin rol
+                    </option>
                     {roles.map((role) => (
                       <option key={role.id} value={role.id}>
                         {role.name}

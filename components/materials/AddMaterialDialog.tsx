@@ -4,7 +4,6 @@ import { DialogButton } from "@/components/ui/DialogButton";
 import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
-import { api_url } from "@/service/url";
 
 interface AddMaterialDialogProps {
   open: boolean;
@@ -34,7 +33,7 @@ const AddMaterialDialog = (props: AddMaterialDialogProps) => {
 
   const getUsers = async () => {
     try {
-      const result = await fetch(`${api_url}/api/users`, {
+      const result = await fetch(`/api/users`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +57,7 @@ const AddMaterialDialog = (props: AddMaterialDialogProps) => {
         alert("No se pudo encontrar el usuario");
         return;
       }
-      const result = await fetch(`${api_url}/api/materials`, {
+      const result = await fetch(`/api/materials`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -2,7 +2,6 @@ import { ProtectedRoute } from "@/components/ProtectedRoute";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { EditUserDialog } from "@/components/users/editUserDialog";
-import { api_url } from "@/service/url";
 import { useEffect, useState } from "react";
 
 const Users = () => {
@@ -16,7 +15,7 @@ const Users = () => {
 
   const getRoles = async () => {
     try {
-      const result = await fetch(`${api_url}/api/roles`, {
+      const result = await fetch(`/api/roles`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -46,7 +45,7 @@ const Users = () => {
 
   const getUsers = async () => {
     try {
-      const result = await fetch(`${api_url}/api/users`, {
+      const result = await fetch(`/api/users`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -106,17 +105,28 @@ const Users = () => {
         <div className="flex flex-col py-12 gap-[104px] mx-28 w-full">
           <h1
             className="flex justify-center h-32"
-            style={{ fontWeight: 400, fontSize: 60 , textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)', transition: 'transform 0.3s ease-in-out', 
-            cursor: 'pointer'
-          }}
-          onMouseEnter={(e) => (e.target as HTMLElement).style.transform = 'scale(1.3)'}
-          onMouseLeave={(e) =>(e.target as HTMLElement).style.transform = 'scale(1)'}  
+            style={{
+              fontWeight: 400,
+              fontSize: 60,
+              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
+              transition: "transform 0.3s ease-in-out",
+              cursor: "pointer",
+            }}
+            onMouseEnter={(e) =>
+              ((e.target as HTMLElement).style.transform = "scale(1.3)")
+            }
+            onMouseLeave={(e) =>
+              ((e.target as HTMLElement).style.transform = "scale(1)")
+            }
           >
             Gestión de Usuarios
           </h1>
           <section
             className="flex flex-col w-full border-2"
-            style={{ overflow: "auto" , textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'}}
+            style={{
+              overflow: "auto",
+              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
+            }}
           >
             <table className="table-auto">
               <thead className="bg-[#10b981] sticky top-0">
