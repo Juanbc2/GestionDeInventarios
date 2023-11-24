@@ -1,4 +1,5 @@
 import prisma from "@/service/prisma";
+import { checkPrivateApi, checkProtectedApi } from "@/utils/checkPrivateApi";
 import type { User } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -8,7 +9,12 @@ interface ResponseData {
   updatedUser?: User;
 }
 
-const userApi = async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
+const userApi = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ResponseData>
+) => {
+  await checkPrivateApi(req, res);
+  await checkProtectedApi(req, res, "ADMIN");
   if (req.method === "PUT") {
     const userId = req.query.id as string;
     const updatedUser = await prisma.user.update({

@@ -1,4 +1,5 @@
 import prisma from "@/service/prisma";
+import { checkPrivateApi } from "@/utils/checkPrivateApi";
 import type { Material } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 
@@ -12,6 +13,9 @@ const MaterialsApi = async (
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) => {
+
+  await checkPrivateApi(req, res);
+
   try {
     if (req.method === "GET") {
       const materials = await prisma.material.findMany({

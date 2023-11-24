@@ -2,6 +2,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { User } from "@prisma/client";
 import prisma from "@/service/prisma";
+import { checkPrivateApi, checkProtectedApi } from "@/utils/checkPrivateApi";
 
 type ResponseData = {
   users?: User[];
@@ -13,6 +14,9 @@ const UsersApi = async (
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
 ) => {
+
+  await checkPrivateApi(req, res);
+  await checkProtectedApi(req, res, "ADMIN");
   try {
     if (req.method === "GET") {
       const users = await prisma.user.findMany();

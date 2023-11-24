@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import type { InventoryMovement } from "@prisma/client";
 import prisma from "@/service/prisma";
+import { checkPrivateApi } from "@/utils/checkPrivateApi";
 
 type ResponseData = {
   movements?: InventoryMovement[];
@@ -8,6 +9,9 @@ type ResponseData = {
 };
 
 const inventoryApi = async (req: NextApiRequest, res: NextApiResponse<ResponseData>) => {
+
+  await checkPrivateApi(req, res);
+
   if (req.method === "GET") {
     const materialId = req.query.materialId as string;
     const movements = await prisma.inventoryMovement.findMany({
