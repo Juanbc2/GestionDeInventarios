@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import type { InventoryMovement } from "@prisma/client";
 import prisma from "@/service/prisma";
-import { checkPrivateApi, checkProtectedApi } from "@/utils/checkPrivateApi";
+import { checkPrivateApi } from "@/utils/checkPrivateApi";
 
 type ResponseData = {
   movements?: InventoryMovement[];

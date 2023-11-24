@@ -1,6 +1,5 @@
 import prisma from "@/service/prisma";
-import { checkPrivateApi, checkProtectedApi } from "@/utils/checkPrivateApi";
-import type { User } from "@prisma/client";
+import { checkPrivateApi } from "@/utils/checkPrivateApi";
 import { NextApiRequest, NextApiResponse } from "next";
 
 interface ResponseData {
