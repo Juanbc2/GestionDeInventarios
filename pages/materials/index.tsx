@@ -4,22 +4,9 @@ import { AddMaterialDialog } from "@/components/materials/AddMaterialDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { useGetMaterialsWithCreatedBy } from "@/hooks/useGetMaterialWithCreatedBy";
-import { useSession } from "next-auth/react";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 const Materials = () => {
-  // const { status } = useSession();
-
-  // const setView = () => {
-  //   if (status === "unauthenticated") {
-  //     window.open("/", "_self");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setView();
-  // }, [status]);
-
   const { materials } = useGetMaterialsWithCreatedBy();
 
   const [open, setOpen] = useState(false);

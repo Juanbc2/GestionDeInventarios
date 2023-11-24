@@ -12,21 +12,10 @@ import {
 } from "@/types";
 import { notify } from "@/utils/toast";
 import axios from "axios";
-import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 
 const Inventory = () => {
-  // const { status } = useSession();
 
-  // const setView = () => {
-  //   if (status === "unauthenticated") {
-  //     window.open("/", "_self");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   setView();
-  // }, [status]);
 
   const { materials } = useGetMaterialsWithCreatedBy();
 
