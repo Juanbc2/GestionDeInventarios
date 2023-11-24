@@ -21,7 +21,7 @@ const SideMenu = () => {
   }, [data, status]);
 
   return (
-    <aside className="gap-16 px-5 py-2 top-0 bg-[#43a88a] flex-col flex h-full w-[260px]">
+    <aside className="gap-16 px-5 py-2 top-0 bg-[#10b981] flex-col flex h-full w-[260px]">
   <section>
     <div className="flex flex-col items-center gap-2 mt-12 relative">
       <div className="h-[180px] w-[180px] rounded-full overflow-hidden">
@@ -31,7 +31,7 @@ const SideMenu = () => {
           alt="Profile pic"
         />
       </div>
-      <span className="text-gray-100 font-light" style={{fontSize:'25px', fontFamily: 'Roboto, serif' }}>{userData.name}</span>
+      <span className="text-slate-100 font-light" style={{fontSize:'25px', fontFamily: 'Roboto, serif' }}>{userData.name}</span>
     </div>
   </section>
       <section className="flex flex-col items-center gap-2">

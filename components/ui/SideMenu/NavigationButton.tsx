@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 interface NavigationButtonProps {
   text: string;
@@ -9,18 +10,24 @@ interface NavigationButtonProps {
 const NavigationButton = ({ text, link }: NavigationButtonProps) => {
   const router = useRouter();
 
+  const [style, setStyle] = useState("");
   const styleChecker = () => {
-    if (router.asPath === link) {
-      return "border-[#ffffff] hover:text-[#9cc4c0]";
-    } else {
-      return "border-[#ffffff] hover:text-[#ffffff] hover:text-[#000000]";
-    }
+    let style =
+      "w-[230px] text-left rounded-3xl border-l-4 border-r-4 border-t border-b-2 ";
+    style =
+      style +
+      (router.asPath === link
+        ? "border-[#ffffff] text-[#fff] hover:bg-[#10b9ab] hover:border-[#000000]"
+        : "border-[#000000] hover:bg-[#10b9ab] hover:text-[#9cc4c0]");
+    setStyle(style);
   };
 
+  useEffect(() => {
+    styleChecker();
+  }, [style]);
+
   return (
-    <button
-      className={`w-[230px]  text-left rounded-3xl border-l-4 border-r-4 border-t border-b-2 ${styleChecker}`}
-    >
+    <button className={style + "bg-[#10b9ab]"}>
       <Link aria-haspopup="false" href={link}>
         <h2 className="px-8 py-2 text-lg">{text}</h2>
       </Link>

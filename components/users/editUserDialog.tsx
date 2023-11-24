@@ -83,7 +83,7 @@ const EditUserDialog = (props: HireDialogProps) => {
       </DialogTitle>
       <DialogContent className="flex flex-col flex-wrap justify-center">
         <div>
-          <table className="table-auto">
+          <table className="bg-[#10b981] sticky top-0">
             <thead>
               <tr>
                 <th className="px-4 py-2">Identificador</th>
@@ -93,7 +93,7 @@ const EditUserDialog = (props: HireDialogProps) => {
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr style={{ backgroundColor: "#f2f2f2" }}>
                 <td className="border px-4 py-2">{form.values.id}</td>
                 <td className="border px-4 py-2 ">
                   <input
