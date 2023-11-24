@@ -21,7 +21,6 @@ const InventoryApi = async (
       return res.status(200).json({ movements });
     }
     if (req.method === "POST") {
-      await checkProtectedApi(req, res, "ADMIN");
       const { movementType, quantity, materialId, userId } = req.body;
       const newMovement = await prisma.inventoryMovement.create({
         data: {

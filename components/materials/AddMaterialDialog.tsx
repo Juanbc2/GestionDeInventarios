@@ -36,7 +36,7 @@ const AddMaterialDialog = (props: AddMaterialDialogProps) => {
     try {
       const user = getUserByEmail(data?.user?.email);
       if (!user) {
-        alert("No se pudo encontrar el usuario");
+        notify("error", "No se pudo encontrar el usuario");
         return;
       }
 

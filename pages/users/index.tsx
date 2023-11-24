@@ -5,6 +5,7 @@ import { SideMenu } from "@/components/ui/SideMenu";
 import { EditUserDialog } from "@/components/users/editUserDialog";
 import { useGetRoles } from "@/hooks/useGetRoles";
 import { useGetUsers } from "@/hooks/useGetUsers";
+import { notify } from "@/utils/toast";
 import { User } from "@prisma/client";
 import { useState } from "react";
 
@@ -29,7 +30,7 @@ const Users = () => {
   const handleClickOpen = (id: string) => {
     const selectUser = users?.find((user) => user.id === id);
     if (!selectUser) {
-      alert("No se pudo encontrar el usuario");
+      notify("error", "No se pudo encontrar el usuario");
       return;
     }
     setSelectedUser(selectUser);

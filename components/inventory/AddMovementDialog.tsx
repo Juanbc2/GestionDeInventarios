@@ -5,10 +5,10 @@ import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
 import { User } from "@prisma/client";
-import { useGetUsers } from "@/hooks/useGetUsers";
 import axios from "axios";
 import { API_SERVICES } from "@/service";
 import { MaterialWithCreatedBy } from "@/types";
+import { useGetUserIdByEmail } from "@/hooks/useGetUserIdByEmail";
 
 interface AddMovementDialogProps {
   open: boolean;
@@ -32,11 +32,15 @@ const AddMovementDialog = (props: AddMovementDialogProps) => {
     },
   });
 
-  const { users } = useGetUsers();
-
-  const getUserByEmail = (email?: string) => {
-    const user = users?.find((user) => user.email === email);
-    return user;
+  const getUserIdByEmail = async (email?: string) => {
+    if (!email) {
+      return false;
+    }
+    const result = await axios.request({
+      method: "GET",
+      url: API_SERVICES.userIdByEmail(email),
+    });
+    return result.data.id.id;
   };
 
   const createMovement = async () => {
@@ -45,29 +49,28 @@ const AddMovementDialog = (props: AddMovementDialogProps) => {
       return;
     }
     try {
-      const user = getUserByEmail(data?.user?.email);
-      if (!user) {
-        alert("No se pudo encontrar el usuario");
+      const userId = await getUserIdByEmail(data?.user.email);
+      if (!userId) {
+        notify("error", "No se pudo encontrar al usuario");
         return;
       }
-
       const result = await axios.request({
         method: "POST",
         url: API_SERVICES.inventory,
         data: {
           movementType: form.values.type,
           quantity: parseInt(form.values.quantity),
-          userId: user.id,
+          userId: userId.toString(),
           materialId: selectedMaterial.id,
         },
       });
       if (result !== null) {
         notify("success", "Movimiento agregado");
-        onClose(selectedValue);
       }
     } catch (error) {
       notify("error", "No se pudo agregar el movimiento");
     }
+    onClose(selectedValue);
   };
 
   const handleClose = () => {
@@ -84,7 +87,7 @@ const AddMovementDialog = (props: AddMovementDialogProps) => {
       <DialogContent className="flex flex-col p-3">
         <div className="flex flex-col p-3 gap-4 items-center">
           <span>Agregar nuevo movimiento a la lista de inventario</span>
-          <form className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             <span>
               Material: <b>{selectedMaterial.name}</b>
             </span>
@@ -120,7 +123,7 @@ const AddMovementDialog = (props: AddMovementDialogProps) => {
               <DialogButton text="Agregar" onClick={createMovement} />
               <DialogButton text="Cerrar" onClick={handleClose} />
             </div>
-          </form>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

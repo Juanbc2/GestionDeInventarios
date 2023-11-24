@@ -45,7 +45,7 @@ const EditUserDialog = (props: HireDialogProps) => {
 
   const updateUser = async () => {
     if (form.values.id === "") {
-      alert("Debe seleccionar un usuario");
+      notify("warning", "Debe seleccionar un usuario");
       return;
     }
     try {
