@@ -1,5 +1,5 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { DialogButton } from "@/components/ui/DialogButton";
 import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
@@ -32,7 +32,7 @@ const AddMovementDialog = (props: AddMovementDialogProps) => {
     },
   });
 
-  const { users, isLoading, error } = useGetUsers();
+  const { users } = useGetUsers();
 
   const getUserByEmail = (email?: string) => {
     const user = users?.find((user) => user.email === email);

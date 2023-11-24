@@ -3,7 +3,6 @@ import { AddMaterialDialog } from "@/components/materials/AddMaterialDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { useGetMaterialsWithCreatedBy } from "@/hooks/useGetMaterialWithCreatedBy";
-import { useGetMaterials } from "@/hooks/useGetMaterials";
 import { useSession } from "next-auth/react";
 import React, { useState, useEffect } from "react";
 
@@ -20,7 +19,7 @@ const Materials = () => {
     setView();
   }, [status]);
 
-  const { materials, isLoading, error } = useGetMaterialsWithCreatedBy();
+  const { materials } = useGetMaterialsWithCreatedBy();
 
   const [open, setOpen] = useState(false);
 

@@ -2,7 +2,6 @@ import { Linechart } from "@/components/charts/linechart";
 import { AddMovementDialog } from "@/components/inventory/AddMovementDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
-import { useGetInventoryByMaterialId } from "@/hooks/useGetInventoryByMaterialId";
 import { useGetMaterialsWithCreatedBy } from "@/hooks/useGetMaterialWithCreatedBy";
 import { API_SERVICES } from "@/service";
 import {
@@ -14,16 +13,6 @@ import { notify } from "@/utils/toast";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
-
-interface inventory {
-  id: string;
-  createdAt: string;
-  movementType: string;
-  quantity: string;
-  createdBy: {
-    name: string;
-  };
-}
 
 const Inventory = () => {
   const { status } = useSession();
