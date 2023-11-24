@@ -4,20 +4,21 @@ import { DialogButton } from "@/components/ui/DialogButton";
 import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
+import { User } from "@prisma/client";
+import { useGetUsers } from "@/hooks/useGetUsers";
+import axios from "axios";
+import { API_SERVICES } from "@/service";
+import { MaterialWithCreatedBy } from "@/types";
 
 interface AddMovementDialogProps {
   open: boolean;
   selectedValue: string;
   onClose: (value: string) => void;
-  selectedMaterial: {
-    id: string;
-    createdAt: string;
-    name: string;
-    quantity: string;
-    createdBy: {
-      name: string;
-    };
-  };
+  selectedMaterial: MaterialWithCreatedBy;
+}
+
+export interface UsersQuery {
+  users: User[];
 }
 
 const AddMovementDialog = (props: AddMovementDialogProps) => {
@@ -31,31 +32,10 @@ const AddMovementDialog = (props: AddMovementDialogProps) => {
     },
   });
 
-  const [users, setUsers] = useState([
-    {
-      id: "",
-      email: "",
-      roleId: "",
-      name: "",
-    },
-  ]);
-
-  const getUsers = async () => {
-    try {
-      const result = await fetch(`/api/users`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((response) => response.json());
-      if (result.users.length > 0) setUsers(result.users);
-    } catch (err) {
-      return err;
-    }
-  };
+  const { users, isLoading, error } = useGetUsers();
 
   const getUserByEmail = (email?: string) => {
-    const user = users.find((user) => user.email === email);
+    const user = users?.find((user) => user.email === email);
     return user;
   };
 
@@ -70,18 +50,17 @@ const AddMovementDialog = (props: AddMovementDialogProps) => {
         alert("No se pudo encontrar el usuario");
         return;
       }
-      const result = await fetch(`/api/inventory`, {
+
+      const result = await axios.request({
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        url: API_SERVICES.inventory,
+        data: {
           movementType: form.values.type,
           quantity: parseInt(form.values.quantity),
           userId: user.id,
           materialId: selectedMaterial.id,
-        }),
-      }).then((res) => res.json());
+        },
+      });
       if (result !== null) {
         notify("success", "Movimiento agregado");
         onClose(selectedValue);
@@ -96,7 +75,7 @@ const AddMovementDialog = (props: AddMovementDialogProps) => {
   };
 
   useEffect(() => {
-    getUsers();
+    //getUsers();
   }, [selectedMaterial]);
 
   return (

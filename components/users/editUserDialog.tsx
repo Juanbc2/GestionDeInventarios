@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { API_SERVICES } from "@/service";
+import axios from "axios";
 
 interface HireDialogProps {
   open: boolean;
@@ -51,17 +53,16 @@ const EditUserDialog = (props: HireDialogProps) => {
       return;
     }
     try {
-      const result = await fetch(`/api/users/${form.values.id}`, {
+      const result = await axios.request({
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        url: API_SERVICES.userById(form.values.id),
+        data: {
           roleId: form.values.roleId,
           name: form.values.name,
           email: form.values.email,
-        }),
-      }).then((response) => response.json());
+        },
+      });
+
       if (result !== null) {
         notify("success", "Usuario actualizado");
         onClose(selectedValue);

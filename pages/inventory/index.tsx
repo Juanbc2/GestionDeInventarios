@@ -2,6 +2,8 @@ import { Linechart } from "@/components/charts/linechart";
 import { AddMovementDialog } from "@/components/inventory/AddMovementDialog";
 import { PrimaryButton } from "@/components/ui/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
+import { useGetMaterialsWithCreatedBy } from "@/hooks/useGetMaterialWithCreatedBy";
+import { MaterialWithCreatedBy } from "@/types";
 import { notify } from "@/utils/toast";
 import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
@@ -29,48 +31,14 @@ const Inventory = () => {
     setView();
   }, [status]);
 
-  const [materials, setMaterials] = useState([
-    {
-      id: "",
-      createdAt: "",
-      name: "",
-      quantity: "",
-      createdBy: { name: "" },
-    },
-  ]);
-
-  const getMaterials = async () => {
-    try {
-      const result = await fetch(`/api/materials`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((res) => res.json());
-      if (result.materials.length > 0) {
-        setMaterials(result.materials);
-      } else {
-        setMaterials([]);
-        notify("Error", "No hay materiales disponibles");
-      }
-    } catch (error) {
-      notify("Error", "No se pudo obtener la lista de materiales");
-    }
-  };
+  const { materials, isLoading, error } = useGetMaterialsWithCreatedBy();
 
   const [selectedMaterialId, setSelectedMaterialId] = useState("");
-  const [selectedMaterial, setSelectedMaterial] = useState({
-    id: "",
-    createdAt: "",
-    name: "",
-    quantity: "",
-    createdBy: {
-      name: "",
-    },
-  });
+  const [selectedMaterial, setSelectedMaterial] =
+    useState<MaterialWithCreatedBy>();
 
   const handleSelectedMaterial = (id: string) => {
-    const material = materials.find((material) => material.id === id);
+    const material = materials?.find((material) => material.id === id);
     if (!material) {
       notify("Error", "No se pudo encontrar el material");
       return;
@@ -94,15 +62,12 @@ const Inventory = () => {
   const getInventory = async () => {
     if (!selectedMaterialId) return;
     try {
-      const result = await fetch(
-        `/api/inventory/${selectedMaterialId}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      ).then((res) => res.json());
+      const result = await fetch(`/api/inventory/${selectedMaterialId}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json());
       if (result.movements.length > 0) {
         setInventory(JSON.parse(JSON.stringify(result.movements)));
         calculateInventoryByQuantity(
@@ -170,10 +135,6 @@ const Inventory = () => {
   };
 
   useEffect(() => {
-    getMaterials();
-  }, []);
-
-  useEffect(() => {
     getInventory();
   }, [selectedMaterial]);
 
@@ -183,22 +144,32 @@ const Inventory = () => {
       style={{ overflowX: "hidden" }}
     >
       <SideMenu />
-      <AddMovementDialog
-        open={open}
-        selectedValue={""}
-        onClose={handleClose}
-        selectedMaterial={selectedMaterial}
-      />
+      {selectedMaterial ? (
+        <AddMovementDialog
+          open={open}
+          selectedValue={""}
+          onClose={handleClose}
+          selectedMaterial={selectedMaterial}
+        />
+      ) : null}
       <div className="flex flex-col py-12 gap-12 mx-28 w-full">
         <h1
           className="flex justify-center h-32"
-          style={{ fontWeight: 400,  fontSize: 60,  
-                    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)' , 
-                    borderRadius: '10px', padding: '10px' , transition: 'transform 0.3s ease-in-out', 
-                    cursor: 'pointer'
-                  }}
-                  onMouseEnter={(e) => (e.target as HTMLElement).style.transform = 'scale(1.3)'}
-                  onMouseLeave={(e) =>(e.target as HTMLElement).style.transform = 'scale(1)'}  
+          style={{
+            fontWeight: 400,
+            fontSize: 60,
+            textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
+            borderRadius: "10px",
+            padding: "10px",
+            transition: "transform 0.3s ease-in-out",
+            cursor: "pointer",
+          }}
+          onMouseEnter={(e) =>
+            ((e.target as HTMLElement).style.transform = "scale(1.3)")
+          }
+          onMouseLeave={(e) =>
+            ((e.target as HTMLElement).style.transform = "scale(1)")
+          }
         >
           Gesti&oacute;n de Inventarios
         </h1>
@@ -214,18 +185,24 @@ const Inventory = () => {
               <option value="" disabled>
                 Seleccione un material
               </option>
-              {materials.map((material) => (
-                <option key={material.id} value={material.id}>
-                  {material.name}
-                </option>
-              ))}
+              {materials
+                ? materials.map((material) => (
+                    <option key={material.id} value={material.id}>
+                      {material.name}
+                    </option>
+                  ))
+                : null}
             </select>
             <PrimaryButton text="Agregar movimiento" onClick={handleOpen} />
           </div>
 
           <div
             className="flex flex-col w-full border-2"
-            style={{ maxHeight: "200px", overflow: "auto", textShadow: '2px 2px 4px rgba(0, 0, 0, 0.3)'  }}
+            style={{
+              maxHeight: "200px",
+              overflow: "auto",
+              textShadow: "2px 2px 4px rgba(0, 0, 0, 0.3)",
+            }}
           >
             <table className="table-auto">
               <thead className="bg-[#10b981] sticky top-0">

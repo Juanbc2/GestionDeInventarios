@@ -4,6 +4,9 @@ import { DialogButton } from "@/components/ui/DialogButton";
 import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
+import { useGetUsers } from "@/hooks/useGetUsers";
+import axios from "axios";
+import { API_SERVICES } from "@/service";
 
 interface AddMaterialDialogProps {
   open: boolean;
@@ -22,31 +25,10 @@ const AddMaterialDialog = (props: AddMaterialDialogProps) => {
     },
   });
 
-  const [users, setUsers] = useState([
-    {
-      id: "",
-      email: "",
-      roleId: "",
-      name: "",
-    },
-  ]);
-
-  const getUsers = async () => {
-    try {
-      const result = await fetch(`/api/users`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then((response) => response.json());
-      if (result.users.length > 0) setUsers(result.users);
-    } catch (err) {
-      return err;
-    }
-  };
+  const { users, isLoading, error } = useGetUsers();
 
   const getUserByEmail = (email?: string) => {
-    const user = users.find((user) => user.email === email);
+    const user = users?.find((user) => user.email === email);
     return user;
   };
 
@@ -57,17 +39,17 @@ const AddMaterialDialog = (props: AddMaterialDialogProps) => {
         alert("No se pudo encontrar el usuario");
         return;
       }
-      const result = await fetch(`/api/materials`, {
+
+      const result = await axios.request({
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+        url: API_SERVICES.materials,
+        data: {
           name: form.values.name,
           quantity: parseInt(form.values.quantity),
           userId: user.id,
-        }),
-      }).then((res) => res.json());
+        },
+      });
+
       if (result !== null) {
         notify("success", "Material agregado");
         onClose(selectedValue);
@@ -80,10 +62,6 @@ const AddMaterialDialog = (props: AddMaterialDialogProps) => {
   const handleClose = () => {
     onClose(selectedValue);
   };
-
-  useEffect(() => {
-    getUsers();
-  }, []);
 
   return (
     <Dialog onClose={handleClose} open={open} maxWidth="xl">
