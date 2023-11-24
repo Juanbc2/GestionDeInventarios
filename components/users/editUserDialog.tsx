@@ -4,7 +4,7 @@ import Dialog from "@mui/material/Dialog";
 import { useEffect } from "react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
-import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { PrimaryButton } from "@/components/ui/Buttons/PrimaryButton";
 import { API_SERVICES } from "@/service";
 import axios from "axios";
 import { User } from "@prisma/client";

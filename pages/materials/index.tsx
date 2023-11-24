@@ -1,13 +1,36 @@
 import { PrivateComponent } from "@/components/PrivateComponent";
 import { PrivateRoute } from "@/components/PrivateRoute";
 import { AddMaterialDialog } from "@/components/materials/AddMaterialDialog";
-import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { PrimaryButton } from "@/components/ui/Buttons/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
-import { useGetMaterialsWithCreatedBy } from "@/hooks/useGetMaterialWithCreatedBy";
-import React, { useState } from "react";
+import { API_SERVICES } from "@/service";
+import { MaterialWithCreatedBy } from "@/types";
+import { notify } from "@/utils/toast";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 
 const Materials = () => {
-  const { materials } = useGetMaterialsWithCreatedBy();
+  const [materials, setMaterials] = useState<MaterialWithCreatedBy[]>([]);
+
+  const getMaterials = async () => {
+    try {
+      const result = await axios.request({
+        url: API_SERVICES.materials,
+        method: "GET",
+      });
+      if (result) {
+        setMaterials(JSON.parse(JSON.stringify(result.data.materials)));
+      } else {
+        setMaterials([]);
+      }
+    } catch (error) {
+      notify("Error", "No se pudo obtener la lista de materiales");
+    }
+  };
+
+  useEffect(() => {
+    getMaterials();
+  }, []);
 
   const [open, setOpen] = useState(false);
 
@@ -23,6 +46,7 @@ const Materials = () => {
           open={open}
           selectedValue={""}
           onClose={handleClose}
+          getMaterials={getMaterials}
         />
         <div className="flex flex-col py-12 gap-12 mx-28 w-full">
           <h1

@@ -1,6 +1,6 @@
 import { PrivateRoute } from "@/components/PrivateRoute";
 import { ProtectedRoute } from "@/components/ProtectedRoute";
-import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { PrimaryButton } from "@/components/ui/Buttons/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { EditUserDialog } from "@/components/users/editUserDialog";
 import { useGetRoles } from "@/hooks/useGetRoles";

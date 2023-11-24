@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import React, { useEffect } from "react";
-import { DialogButton } from "@/components/ui/DialogButton";
+import { DialogButton } from "@/components/ui/Buttons/DialogButton";
 import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";

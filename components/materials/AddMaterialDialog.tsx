@@ -1,6 +1,6 @@
 import { Dialog, DialogContent, DialogTitle } from "@mui/material";
 import React from "react";
-import { DialogButton } from "@/components/ui/DialogButton";
+import { DialogButton } from "@/components/ui/Buttons/DialogButton";
 import { useSession } from "next-auth/react";
 import { useForm } from "@mantine/form";
 import { notify } from "@/utils/toast";
@@ -12,10 +12,11 @@ interface AddMaterialDialogProps {
   open: boolean;
   selectedValue: string;
   onClose: (value: string) => void;
+  getMaterials: () => void;
 }
 
 const AddMaterialDialog = (props: AddMaterialDialogProps) => {
-  const { onClose, selectedValue, open } = props;
+  const { onClose, selectedValue, open, getMaterials } = props;
   const { data } = useSession();
 
   const form = useForm({
@@ -52,6 +53,7 @@ const AddMaterialDialog = (props: AddMaterialDialogProps) => {
 
       if (result !== null) {
         notify("success", "Material agregado");
+        getMaterials();
         onClose(selectedValue);
       }
     } catch (error) {
@@ -69,7 +71,7 @@ const AddMaterialDialog = (props: AddMaterialDialogProps) => {
       <DialogContent className="flex flex-col p-3">
         <div className="flex flex-col p-3 gap-4 items-center">
           <span>Agregar nuevo material a la lista de materiales</span>
-          <form className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3">
             <label className="flex flex-col gap-1" htmlFor="material-name">
               <span>
                 Nombre<span className="text-red-500">*</span>
@@ -98,7 +100,7 @@ const AddMaterialDialog = (props: AddMaterialDialogProps) => {
               <DialogButton text="Agregar" onClick={createMaterial} />
               <DialogButton text="Cerrar" onClick={handleClose} />
             </div>
-          </form>
+          </div>
         </div>
       </DialogContent>
     </Dialog>

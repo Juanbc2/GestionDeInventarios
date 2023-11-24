@@ -1,7 +1,7 @@
 import { PrivateRoute } from "@/components/PrivateRoute";
 import { Linechart } from "@/components/charts/linechart";
 import { AddMovementDialog } from "@/components/inventory/AddMovementDialog";
-import { PrimaryButton } from "@/components/ui/PrimaryButton";
+import { PrimaryButton } from "@/components/ui/Buttons/PrimaryButton";
 import { SideMenu } from "@/components/ui/SideMenu";
 import { useGetMaterialsWithCreatedBy } from "@/hooks/useGetMaterialWithCreatedBy";
 import { API_SERVICES } from "@/service";
@@ -42,24 +42,14 @@ const Inventory = () => {
         url: API_SERVICES.inventoryByMaterialId(selectedMaterialId),
         method: "GET",
       });
-      if (result) {
+      if (result.data.movements.length > 0) {
         setInventory(JSON.parse(JSON.stringify(result.data.movements)));
         calculateInventoryByQuantity(
           JSON.parse(JSON.stringify(result.data.movements))
         );
       } else {
-        setInventory([
-          {
-            id: "",
-            materialId: "",
-            createdAt: new Date(),
-            movementType: "",
-            quantity: 0,
-            createdBy: {
-              name: "",
-            },
-          },
-        ]);
+        setInventoryByQuantity(undefined);
+        setInventory([]);
         notify("Error", "No hay movimientos de inventario");
       }
     } catch (error) {
