@@ -6,7 +6,6 @@ import { EditUserDialog } from "@/components/users/editUserDialog";
 import { useGetRoles } from "@/hooks/useGetRoles";
 import { useGetUsers } from "@/hooks/useGetUsers";
 import { User } from "@prisma/client";
-import Image from "next/image";
 import { useState } from "react";
 
 const Users = () => {
@@ -105,7 +104,7 @@ const Users = () => {
                           <td className="border px-4 py-2">{user.id}</td>
                           <td className="border">
                             {user.image ? (
-                              <Image
+                              <img
                                 src={user.image}
                                 alt="user picture"
                                 className="w-10 h-10 rounded-full m-auto"
