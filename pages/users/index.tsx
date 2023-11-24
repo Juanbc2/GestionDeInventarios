@@ -106,7 +106,6 @@ const Users = () => {
                             {user.image ? (
                               <img
                                 src={user.image}
-                                alt="user picture"
                                 className="w-10 h-10 rounded-full m-auto"
                               />
                             ) : (
